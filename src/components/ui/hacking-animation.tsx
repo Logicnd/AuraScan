@@ -7,20 +7,20 @@ interface HackingAnimationProps {
   onComplete: () => void
 }
 
+const HACKING_LOGS = [
+  "Establishing handshake...",
+  "Bypassing firewall...",
+  "Injecting payload...",
+  "Decrypting hashes...",
+  "Analyzing vulnerabilities...",
+  "Extracting metadata...",
+  "Compiling report...",
+  "Covering tracks..."
+]
+
 export function HackingAnimation({ onComplete }: HackingAnimationProps) {
   const [progress, setProgress] = useState(0)
   const [logs, setLogs] = useState<string[]>([])
-
-  const hackingLogs = [
-    "Establishing handshake...",
-    "Bypassing firewall...",
-    "Injecting payload...",
-    "Decrypting hashes...",
-    "Analyzing vulnerabilities...",
-    "Extracting metadata...",
-    "Compiling report...",
-    "Covering tracks..."
-  ]
 
   useEffect(() => {
     let currentProgress = 0
@@ -35,7 +35,7 @@ export function HackingAnimation({ onComplete }: HackingAnimationProps) {
       
       // Add random logs
       if (Math.random() > 0.7) {
-        const log = hackingLogs[Math.floor(Math.random() * hackingLogs.length)]
+        const log = HACKING_LOGS[Math.floor(Math.random() * HACKING_LOGS.length)]
         setLogs(prev => [...prev.slice(-5), `> ${log} [${Math.floor(Math.random() * 999)}ms]`])
       }
     }, 100)

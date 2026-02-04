@@ -52,7 +52,7 @@ export function NotificationProvider({
         removeNotification(id)
       }, notification.duration || 5000)
     }
-  }, [maxNotifications])
+  }, [maxNotifications, removeNotification])
 
   const removeNotification = useCallback((id: string) => {
     setNotifications(prev => prev.filter(n => n.id !== id))
@@ -222,6 +222,8 @@ function CyberNotification({ notification, onClose, index }: CyberNotificationPr
 
 // Quick notification functions
 export function notify(_title: string, _options?: Partial<Omit<Notification, 'id' | 'title'>>) {
+  void _title
+  void _options
   // This would need to be called within a component that has access to the context
   // For a cleaner API, use the hook directly
 }

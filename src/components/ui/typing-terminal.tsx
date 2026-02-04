@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { cn } from '@/lib/utils'
 
 interface TypingTerminalProps {
@@ -26,7 +26,7 @@ export function TypingTerminal({
 }: TypingTerminalProps) {
   const [displayedText, setDisplayedText] = useState('')
   const [currentLineIndex, setCurrentLineIndex] = useState(0)
-  const lines = Array.isArray(text) ? text : [text]
+  const lines = useMemo(() => (Array.isArray(text) ? text : [text]), [text])
 
   useEffect(() => {
     if (currentLineIndex >= lines.length) {

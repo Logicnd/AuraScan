@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
@@ -100,7 +101,13 @@ export function Leaderboard({
                 rankColors[rank] || 'from-zinc-600 to-zinc-700'
               )}>
                 {entry.avatar ? (
-                  <img src={entry.avatar} alt={entry.name} className="w-full h-full rounded-full object-cover" />
+                  <Image
+                    src={entry.avatar}
+                    alt={entry.name}
+                    width={48}
+                    height={48}
+                    className="w-full h-full rounded-full object-cover"
+                  />
                 ) : (
                   <div className="w-full h-full rounded-full flex items-center justify-center text-white font-bold">
                     {entry.name[0]}
@@ -154,7 +161,13 @@ export function Leaderboard({
               {/* Avatar */}
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-zinc-600 to-zinc-700 flex items-center justify-center">
                 {entry.avatar ? (
-                  <img src={entry.avatar} alt={entry.name} className="w-full h-full rounded-full object-cover" />
+                  <Image
+                    src={entry.avatar}
+                    alt={entry.name}
+                    width={32}
+                    height={32}
+                    className="w-full h-full rounded-full object-cover"
+                  />
                 ) : (
                   <span className="text-white text-sm font-bold">{entry.name[0]}</span>
                 )}

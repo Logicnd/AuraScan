@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
@@ -122,7 +123,13 @@ export function CyberHeader({ user, notifications = 0, className }: CyberHeaderP
             >
               <div className="relative w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-magenta-500 flex items-center justify-center">
                 {user.avatar ? (
-                  <img src={user.avatar} alt={user.name} className="w-full h-full rounded-lg object-cover" />
+                  <Image
+                    src={user.avatar}
+                    alt={user.name}
+                    width={32}
+                    height={32}
+                    className="w-full h-full rounded-lg object-cover"
+                  />
                 ) : (
                   <span className="text-white font-bold">{user.name[0]}</span>
                 )}
