@@ -286,7 +286,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 </p>
 
 <p align="center">
-  <a href="https://aurascan.app">Website</a> •
+  <a href="https://aurascan.lol">Website</a> •
   <a href="https://twitter.com/aurascanapp">Twitter</a> •
   <a href="https://discord.gg/aurascan">Discord</a>
 </p>
