@@ -8,7 +8,7 @@ import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Loader2, ShieldCheck, User } from 'lucide-react'
+import { Loader2, ShieldCheck } from 'lucide-react'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -35,7 +35,7 @@ export default function LoginPage() {
         router.push('/')
         router.refresh()
       }
-    } catch (err) {
+    } catch {
       setError('An unexpected error occurred')
     } finally {
       setLoading(false)
@@ -131,7 +131,7 @@ export default function LoginPage() {
           </form>
 
           <div className="mt-6 text-center text-sm text-zinc-500">
-            Don't have an identity?{" "}
+            Don&apos;t have an identity?{" "}
             <Link href="/auth/signup" className="text-green-500 hover:text-green-400 font-medium hover:underline">
               Initialize Protocol
             </Link>

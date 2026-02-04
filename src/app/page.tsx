@@ -19,7 +19,7 @@ export default function Home() {
 
       <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-to-br before:from-transparent before:to-green-500 before:opacity-10 before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-to-t after:from-emerald-200 after:via-green-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-green-700 before:dark:opacity-10 after:dark:from-emerald-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
         <h1 className="text-4xl font-bold tracking-tight sm:text-6xl text-center">
-          Your AI's <span className="text-primary">Conscience</span>
+          Your AI&apos;s <span className="text-primary">Conscience</span>
         </h1>
       </div>
 

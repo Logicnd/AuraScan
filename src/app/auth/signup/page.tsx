@@ -40,7 +40,7 @@ export default function SignupPage() {
         alert('Check your email for the confirmation link!')
         router.push('/auth/login')
       }
-    } catch (err) {
+    } catch {
       setError('An unexpected error occurred')
     } finally {
       setLoading(false)
