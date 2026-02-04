@@ -9,20 +9,26 @@ import { AnalysisResult } from '@/components/scan/analysis-result'
 import { HackingAnimation } from '@/components/ui/hacking-animation'
 import { GlitchText } from '@/components/ui/glitch-text'
 
+type ScanIssueSeverity = 'high' | 'medium' | 'low'
+
+type ScanIssue = {
+  id: string
+  severity: ScanIssueSeverity
+  title: string
+  description: string
+  line?: number
+}
+
+type ScanResult = {
+  score: number
+  timestamp: string
+  issues: ScanIssue[]
+}
+
 export default function ScanPage() {
   const { addXp } = useGamification()
   const [status, setStatus] = useState<'idle' | 'scanning' | 'complete'>('idle')
-  const [result, setResult] = useState<{
-    score: number
-    timestamp: string
-    issues: Array<{
-      id: string
-      severity: 'high' | 'medium' | 'low'
-      title: string
-      description: string
-      line?: number
-    }>
-  } | null>(null)
+  const [result, setResult] = useState<ScanResult | null>(null)
 
   const handleScan = () => {
     setStatus('scanning')
@@ -30,7 +36,7 @@ export default function ScanPage() {
 
   const handleScanComplete = () => {
     // Mock analysis result
-    const mockResult = {
+    const mockResult: ScanResult = {
       score: Math.floor(Math.random() * 40) + 60, // Random score 60-100
       timestamp: new Date().toISOString(),
       issues: [
@@ -45,7 +51,7 @@ export default function ScanPage() {
           id: 'vuln-2',
           severity: 'medium',
           title: 'Insecure Dependency',
-          description: 'Package "evil-corp-lib" is known to contain malware.',
+          description: 'Package "evil-corp-lib" is known to contain malware.'
         }
       ]
     }
