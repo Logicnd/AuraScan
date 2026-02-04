@@ -40,7 +40,7 @@ export * from './animated-progress'
 export * from './radar-scan'
 
 // Gamification
-export * from './badge-system'
+export * from './badges'
 export * from './leaderboard'
 export * from './quest-tracker'
 export * from './achievement-popup'

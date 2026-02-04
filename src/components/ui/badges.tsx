@@ -139,15 +139,9 @@ export function Badge({
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 rotate-45 w-2 h-2 bg-black border-r border-b border-zinc-800" />
         </div>
       )}
-
-      <style jsx>{`
-        @keyframes shimmer {
-          0% { background-position: -200% center; }
-          100% { background-position: 200% center; }
-        }
-      `}</style>
     </div>
   )
+}
 }
 
 interface AchievementProps {
