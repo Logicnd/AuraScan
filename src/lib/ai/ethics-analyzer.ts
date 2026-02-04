@@ -204,7 +204,7 @@ OUTPUT REQUIREMENTS:
  * TIME: ~2-5 seconds depending on prompt length
  * 
  * @configurable Change model to adjust cost/quality tradeoff:
- * - 'gpt-4-turbo-preview' (default): Best quality, ~$0.02/scan
+ * - 'gpt-4-turbo' (default): Best quality, ~$0.02/scan
  * - 'gpt-4o-mini': Good quality, ~$0.002/scan  
  * - 'gpt-3.5-turbo': Fast/cheap, ~$0.001/scan (lower quality)
  */
@@ -219,8 +219,8 @@ export async function analyzePromptEthics(prompt: string): Promise<EthicsAnalysi
     const completion = await openai.chat.completions.create({
       // @configurable MODEL SELECTION
       // Change this to adjust quality vs cost
-      // Options: 'gpt-4-turbo-preview', 'gpt-4o-mini', 'gpt-3.5-turbo'
-      model: 'gpt-4-turbo-preview',
+      // Options: 'gpt-4-turbo', 'gpt-4o-mini', 'gpt-3.5-turbo'
+      model: 'gpt-4-turbo',
       messages: [
         { role: 'system', content: ETHICS_SYSTEM_PROMPT },
         { 
@@ -332,7 +332,7 @@ export async function quickScan(prompt: string): Promise<{
     const completion = await openai.chat.completions.create({
       // Use cheaper model for quick scans
       // @configurable Change to 'gpt-3.5-turbo' for even cheaper
-      model: 'gpt-4-turbo-preview',
+      model: 'gpt-4-turbo',
       messages: [
         { 
           role: 'system', 
@@ -463,7 +463,7 @@ export function estimateCarbonCost(tokensUsed: number, model: string): number {
   // Estimates based on published research (gCO2e per 1000 tokens)
   // These are approximations - actual values depend on datacenter location
   const carbonPerThousandTokens: Record<string, number> = {
-    'gpt-4-turbo-preview': 0.5,
+    'gpt-4-turbo': 0.5,
     'gpt-4': 0.6,
     'gpt-4o': 0.4,
     'gpt-4o-mini': 0.15,

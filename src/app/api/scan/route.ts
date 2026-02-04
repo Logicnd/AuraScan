@@ -31,6 +31,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { prompt, mode = 'full', userId } = body;
+    const modelUsed = process.env.OPENAI_MODEL || 'gpt-4-turbo';
 
     if (!prompt || typeof prompt !== 'string') {
       return NextResponse.json(
@@ -100,7 +101,7 @@ export async function POST(req: NextRequest) {
 
     const processingTime = Date.now() - startTime;
     const tokensEstimate = Math.ceil(prompt.length / 4) + 1000; // Rough estimate
-    const carbonCost = estimateCarbonCost(tokensEstimate, 'gpt-4-turbo-preview');
+    const carbonCost = estimateCarbonCost(tokensEstimate, modelUsed);
 
     // Save to database if user is authenticated
     if (userId && mode === 'full') {
@@ -121,7 +122,7 @@ export async function POST(req: NextRequest) {
           fairness_score: analysis.scores?.fairness || 0,
           analysis: analysis,
           carbon_cost: carbonCost,
-          model_used: 'gpt-4-turbo-preview',
+          model_used: modelUsed,
           tokens_used: tokensEstimate,
           processing_time_ms: processingTime,
           created_at: new Date().toISOString(),
@@ -156,7 +157,7 @@ export async function POST(req: NextRequest) {
         processingTimeMs: processingTime,
         tokensUsed: tokensEstimate,
         carbonCostGrams: carbonCost,
-        model: 'gpt-4-turbo-preview',
+        model: modelUsed,
         timestamp: new Date().toISOString(),
       },
     });
