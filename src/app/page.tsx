@@ -11,32 +11,17 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useScanStore, useGamificationStore, useUserStore } from '@/store';
 import { formatCompactNumber } from '@/lib/utils';
-
-// Quick action icons
-const BiasIcon = () => (
-  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
-  </svg>
-);
-
-const PrivacyIcon = () => (
-  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-  </svg>
-);
-
-const DeepfakeIcon = () => (
-  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-  </svg>
-);
-
-const EcoIcon = () => (
-  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>
-);
+import { 
+  Scale, 
+  Shield, 
+  Eye, 
+  Leaf,
+  Zap,
+  Sparkles,
+  Search,
+  Trophy
+} from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function HomePage() {
   const { dailyScanCount } = useScanStore();
@@ -46,6 +31,12 @@ export default function HomePage() {
   const isPremium = user?.isPremium ?? false;
   const scanLimit = isPremium ? 1000 : 10;
   const scansRemaining = scanLimit - dailyScanCount;
+
+  const handleQuickAction = (action: string) => {
+    toast.info(`${action} feature`, {
+      description: 'This feature is coming soon! Use the main scanner above.',
+    });
+  };
 
   return (
     <MainLayout>
@@ -57,8 +48,8 @@ export default function HomePage() {
           className="text-center space-y-4"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
-            <span className="animate-pulse">🟢</span>
-            AI Ethics Guardian Active
+            <span className="animate-pulse" aria-hidden="true">🟢</span>
+            <span>AI Ethics Guardian Active</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-gradient">
             Your AI's Conscience
@@ -79,23 +70,23 @@ export default function HomePage() {
           <StatsCard
             title="Total XP"
             value={formatCompactNumber(totalXP)}
-            icon={<span className="text-xl">⚡</span>}
+            icon={<Zap className="w-5 h-5" aria-hidden="true" />}
             trend={{ value: 12, direction: 'up' }}
           />
           <StatsCard
             title="Karma"
             value={karma.toLocaleString()}
-            icon={<span className="text-xl">✨</span>}
+            icon={<Sparkles className="w-5 h-5" aria-hidden="true" />}
           />
           <StatsCard
             title="Scans Today"
             value={`${dailyScanCount}/${scanLimit}`}
-            icon={<span className="text-xl">🔍</span>}
+            icon={<Search className="w-5 h-5" aria-hidden="true" />}
           />
           <StatsCard
             title="Ethics Rank"
             value={`#${Math.max(1, 1000 - level * 10)}`}
-            icon={<span className="text-xl">🏆</span>}
+            icon={<Trophy className="w-5 h-5" aria-hidden="true" />}
             trend={{ value: 5, direction: 'up' }}
           />
         </motion.div>
@@ -117,37 +108,65 @@ export default function HomePage() {
         >
           <h2 className="text-lg font-bold mb-4">Quick Actions</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <Card variant="ethics" padding="sm" interactive className="text-center">
+            <Card 
+              variant="ethics" 
+              padding="sm" 
+              interactive 
+              className="text-center"
+              onClick={() => handleQuickAction('Bias Check')}
+              aria-label="Quick bias check scan"
+            >
               <CardContent className="flex flex-col items-center gap-2 py-4">
                 <div className="p-3 rounded-xl bg-primary/10 text-primary">
-                  <BiasIcon />
+                  <Scale className="w-5 h-5" aria-hidden="true" />
                 </div>
                 <span className="text-sm font-medium">Bias Check</span>
               </CardContent>
             </Card>
             
-            <Card variant="ethics" padding="sm" interactive className="text-center">
+            <Card 
+              variant="ethics" 
+              padding="sm" 
+              interactive 
+              className="text-center"
+              onClick={() => handleQuickAction('Privacy Scan')}
+              aria-label="Quick privacy scan"
+            >
               <CardContent className="flex flex-col items-center gap-2 py-4">
                 <div className="p-3 rounded-xl bg-neon-purple/10 text-neon-purple">
-                  <PrivacyIcon />
+                  <Shield className="w-5 h-5" aria-hidden="true" />
                 </div>
                 <span className="text-sm font-medium">Privacy Scan</span>
               </CardContent>
             </Card>
             
-            <Card variant="ethics" padding="sm" interactive className="text-center">
+            <Card 
+              variant="ethics" 
+              padding="sm" 
+              interactive 
+              className="text-center"
+              onClick={() => handleQuickAction('Deepfake Check')}
+              aria-label="Quick deepfake detection"
+            >
               <CardContent className="flex flex-col items-center gap-2 py-4">
                 <div className="p-3 rounded-xl bg-ethics-warning/10 text-ethics-warning">
-                  <DeepfakeIcon />
+                  <Eye className="w-5 h-5" aria-hidden="true" />
                 </div>
                 <span className="text-sm font-medium">Deepfake Check</span>
               </CardContent>
             </Card>
             
-            <Card variant="ethics" padding="sm" interactive className="text-center">
+            <Card 
+              variant="ethics" 
+              padding="sm" 
+              interactive 
+              className="text-center"
+              onClick={() => handleQuickAction('Eco Impact')}
+              aria-label="Check environmental impact"
+            >
               <CardContent className="flex flex-col items-center gap-2 py-4">
                 <div className="p-3 rounded-xl bg-ethics-safe/10 text-ethics-safe">
-                  <EcoIcon />
+                  <Leaf className="w-5 h-5" aria-hidden="true" />
                 </div>
                 <span className="text-sm font-medium">Eco Impact</span>
               </CardContent>

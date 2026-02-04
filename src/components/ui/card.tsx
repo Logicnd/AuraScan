@@ -47,13 +47,31 @@ export interface CardProps
     VariantProps<typeof cardVariants> {}
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ className, variant, padding, interactive, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn(cardVariants({ variant, padding, interactive, className }))}
-      {...props}
-    />
-  )
+  ({ className, variant, padding, interactive, onClick, children, ...props }, ref) => {
+    const interactiveProps = interactive && onClick ? {
+      role: 'button',
+      tabIndex: 0,
+      onKeyDown: (e: React.KeyboardEvent<HTMLDivElement>) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          // Trigger click on the element
+          e.currentTarget.click();
+        }
+      },
+    } : {};
+
+    return (
+      <div
+        ref={ref}
+        className={cn(cardVariants({ variant, padding, interactive, className }))}
+        onClick={onClick}
+        {...interactiveProps}
+        {...props}
+      >
+        {children}
+      </div>
+    );
+  }
 );
 Card.displayName = 'Card';
 
