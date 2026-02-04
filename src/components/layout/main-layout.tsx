@@ -63,22 +63,46 @@ export const Header: React.FC = () => {
   const { level, streakDays } = useGamificationStore();
   const { user } = useUserStore();
   const { unreadCount } = useNotificationStore();
+  const pathname = usePathname();
 
   return (
     <header className="sticky top-0 z-40 w-full bg-background/80 backdrop-blur-lg border-b safe-area-inset-top">
-      <div className="container-mobile flex h-14 items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between">
+        {/* Home Button - Always Visible */}
+        <Link href="/" className={cn(
+          "flex items-center gap-2 px-3 py-2 rounded-lg transition-colors",
+          pathname === '/' ? 'bg-primary/10 text-primary' : 'hover:bg-secondary'
+        )}>
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center">
             <span className="text-white font-bold text-lg">A</span>
           </div>
-          <span className="font-bold text-lg hidden sm:inline">AuraScan</span>
+          <span className="font-bold text-base hidden sm:inline whitespace-nowrap">Home</span>
         </Link>
 
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex items-center gap-1">
+          {NAV_ITEMS.slice(1).map((item) => {
+            const isActive = pathname === item.href;
+            return (
+              <Link key={item.href} href={item.href}>
+                <div className={cn(
+                  'flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors',
+                  isActive
+                    ? 'bg-primary/10 text-primary'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+                )}>
+                  <span>{item.icon}</span>
+                  <span className="hidden lg:inline">{item.label}</span>
+                </div>
+              </Link>
+            );
+          })}
+        </nav>
+
         {/* User Stats */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           {/* Notifications */}
-          <Link href="/notifications" className="relative p-2 rounded-lg hover:bg-secondary transition-colors">
+          <Link href="/" className="relative p-2 rounded-lg hover:bg-secondary transition-colors">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
             </svg>
@@ -89,8 +113,8 @@ export const Header: React.FC = () => {
             )}
           </Link>
 
-          {/* Level & Streak */}
-          <div className="flex items-center gap-2">
+          {/* Level & Streak - Hide on very small screens */}
+          <div className="hidden sm:flex items-center gap-2">
             <LevelBadge level={level} size="sm" />
             {streakDays > 0 && (
               <StreakBadge days={streakDays} size="sm" />
@@ -99,7 +123,7 @@ export const Header: React.FC = () => {
 
           {/* Avatar */}
           <Link href="/profile">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center text-white text-sm font-bold">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center text-white text-sm font-bold hover:ring-2 ring-primary/50 transition-all">
               {user?.displayName?.charAt(0) || 'U'}
             </div>
           </Link>
@@ -113,45 +137,69 @@ export const Header: React.FC = () => {
 export const BottomNav: React.FC = () => {
   const pathname = usePathname();
 
-  return (
-    <nav className="nav-bottom">
-      {NAV_ITEMS.map((item) => {
-        const isActive = pathname === item.href;
-        const isCenter = item.href === '/';
+  // Simplified nav items for mobile
+  const mobileNavItems = [
+    {
+      href: '/',
+      label: 'Scan',
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      ),
+    },
+    {
+      href: '/templates',
+      label: 'Templates',
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+        </svg>
+      ),
+    },
+    {
+      href: '/leaderboard',
+      label: 'Leaderboard',
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        </svg>
+      ),
+    },
+    {
+      href: '/profile',
+      label: 'Profile',
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+      ),
+    },
+  ];
 
-        if (isCenter) {
+  return (
+    <nav className="nav-bottom bg-background/95 backdrop-blur-xl border-t">
+      <div className="flex justify-around items-center w-full h-full">
+        {mobileNavItems.map((item) => {
+          const isActive = pathname === item.href;
           return (
             <Link key={item.href} href={item.href}>
               <motion.div
-                whileTap={{ scale: 0.9 }}
+                whileTap={{ scale: 0.95 }}
                 className={cn(
-                  'scan-button',
-                  isActive && 'ring-4 ring-primary/30'
+                  'flex flex-col items-center gap-1 p-2 rounded-lg transition-all duration-200',
+                  isActive
+                    ? 'text-primary bg-primary/10'
+                    : 'text-muted-foreground hover:text-foreground'
                 )}
               >
-                <div className="text-white">{item.icon}</div>
+                {item.icon}
+                <span className="text-xs font-medium">{item.label}</span>
               </motion.div>
             </Link>
           );
-        }
-
-        return (
-          <Link key={item.href} href={item.href}>
-            <motion.div
-              whileTap={{ scale: 0.95 }}
-              className={cn(
-                'flex flex-col items-center gap-1 p-2 rounded-lg transition-colors touch-target',
-                isActive
-                  ? 'text-primary'
-                  : 'text-muted-foreground hover:text-foreground'
-              )}
-            >
-              {item.icon}
-              <span className="text-xs font-medium">{item.label}</span>
-            </motion.div>
-          </Link>
-        );
-      })}
+        })}
+      </div>
     </nav>
   );
 };
@@ -162,6 +210,15 @@ export const Sidebar: React.FC = () => {
   const { sidebarOpen, setSidebarOpen } = useUIStore();
   const { level, karma, streakDays } = useGamificationStore();
   const { user } = useUserStore();
+
+  const sidebarItems = [
+    { href: '/', label: 'Home', icon: '🏠' },
+    { href: '/templates', label: 'Templates', icon: '📋' },
+    { href: '/feed', label: 'Ethics Feed', icon: '📰' },
+    { href: '/learn', label: 'Learn', icon: '📚' },
+    { href: '/leaderboard', label: 'Leaderboard', icon: '🏆' },
+    { href: '/guilds', label: 'Guilds', icon: '⚔️' },
+  ];
 
   return (
     <>
@@ -184,66 +241,54 @@ export const Sidebar: React.FC = () => {
         animate={{ x: sidebarOpen ? 0 : -300 }}
         transition={{ type: 'spring', damping: 20 }}
         className={cn(
-          'fixed left-0 top-0 z-50 h-full w-72 bg-background border-r',
-          'flex flex-col lg:translate-x-0 lg:static lg:z-0'
+          'fixed left-0 top-16 z-50 h-[calc(100vh-4rem)] w-72 bg-card border-r overflow-y-auto',
+          'flex flex-col lg:translate-x-0 lg:static lg:z-0 lg:top-0 lg:h-full'
         )}
       >
-        {/* Header */}
-        <div className="p-6 border-b">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center text-white font-bold text-xl">
+        {/* User Profile Section */}
+        <div className="p-4 border-b">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center text-white font-bold text-sm">
               {user?.displayName?.charAt(0) || 'A'}
             </div>
-            <div>
-              <h3 className="font-bold">{user?.displayName || 'AuraScan User'}</h3>
-              <p className="text-sm text-muted-foreground">Level {level}</p>
+            <div className="flex-1 min-w-0">
+              <h3 className="font-semibold truncate text-sm">{user?.displayName || 'Explorer'}</h3>
+              <p className="text-xs text-muted-foreground">Level {level}</p>
             </div>
           </div>
 
           {/* Quick Stats */}
-          <div className="mt-4 flex gap-4">
-            <div className="text-center">
-              <p className="text-lg font-bold text-primary">{level}</p>
-              <p className="text-xs text-muted-foreground">Level</p>
+          <div className="grid grid-cols-3 gap-2 text-center text-xs">
+            <div className="p-2 rounded-lg bg-secondary/50">
+              <p className="font-bold text-primary">{level}</p>
+              <p className="text-muted-foreground">Level</p>
             </div>
-            <div className="text-center">
-              <p className="text-lg font-bold text-karma-positive">{karma}</p>
-              <p className="text-xs text-muted-foreground">Karma</p>
+            <div className="p-2 rounded-lg bg-secondary/50">
+              <p className="font-bold text-emerald-500">{karma}</p>
+              <p className="text-muted-foreground">Karma</p>
             </div>
-            <div className="text-center">
-              <p className="text-lg font-bold text-xp-gold">{streakDays}</p>
-              <p className="text-xs text-muted-foreground">Streak</p>
+            <div className="p-2 rounded-lg bg-secondary/50">
+              <p className="font-bold text-yellow-500">{streakDays}</p>
+              <p className="text-muted-foreground">Streak</p>
             </div>
           </div>
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
-          {[
-            { href: '/', label: 'Scan', icon: '🔍' },
-            { href: '/feed', label: 'Ethics Feed', icon: '📰' },
-            { href: '/templates', label: 'Template Vault', icon: '📋' },
-            { href: '/learn', label: 'Learning Hub', icon: '📚' },
-            { href: '/leaderboard', label: 'Leaderboard', icon: '🏆' },
-            { href: '/guilds', label: 'Guilds', icon: '⚔️' },
-            { href: '/challenges', label: 'Challenges', icon: '🎯' },
-            { href: '/achievements', label: 'Achievements', icon: '🏅' },
-            { href: '/journal', label: 'Ethics Journal', icon: '📓' },
-            { href: '/ar', label: 'AR Lens', icon: '📷' },
-            { href: '/settings', label: 'Settings', icon: '⚙️' },
-          ].map((item) => {
+        <nav className="flex-1 p-3 space-y-1">
+          {sidebarItems.map((item) => {
             const isActive = pathname === item.href;
             return (
               <Link key={item.href} href={item.href}>
                 <div
                   className={cn(
-                    'flex items-center gap-3 px-4 py-3 rounded-xl transition-colors',
+                    'flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200',
                     isActive
-                      ? 'bg-primary/10 text-primary font-medium'
-                      : 'hover:bg-secondary text-muted-foreground hover:text-foreground'
+                      ? 'bg-primary/10 text-primary'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-secondary/50'
                   )}
                 >
-                  <span className="text-xl">{item.icon}</span>
+                  <span className="text-lg">{item.icon}</span>
                   <span>{item.label}</span>
                 </div>
               </Link>
@@ -253,13 +298,13 @@ export const Sidebar: React.FC = () => {
 
         {/* Premium CTA */}
         {!user?.isPremium && (
-          <div className="p-4 border-t">
-            <div className="p-4 rounded-xl bg-gradient-to-r from-xp-gold/20 to-xp-gold/5 border border-xp-gold/30">
-              <h4 className="font-bold mb-1">Upgrade to Premium</h4>
-              <p className="text-sm text-muted-foreground mb-3">
-                Unlimited scans, advanced features & more
+          <div className="p-3 border-t">
+            <div className="p-3 rounded-lg bg-gradient-to-r from-primary/20 to-primary/5 border border-primary/30">
+              <h4 className="font-semibold text-sm mb-1">Go Premium</h4>
+              <p className="text-xs text-muted-foreground mb-2">
+                Unlock unlimited scans & advanced features
               </p>
-              <Button variant="xp" size="sm" className="w-full">
+              <Button variant="default" size="sm" className="w-full text-xs">
                 $2.99/month
               </Button>
             </div>
@@ -277,18 +322,18 @@ interface MainLayoutProps {
 
 export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-background">
       <Header />
       
-      <div className="flex flex-1">
+      <div className="flex flex-1 w-full">
         {/* Desktop Sidebar */}
-        <div className="hidden lg:block">
+        <div className="hidden lg:block w-72 border-r bg-card">
           <Sidebar />
         </div>
 
-        {/* Main Content */}
-        <main className="flex-1 pb-20 lg:pb-0">
-          <div className="container-mobile py-6">
+        {/* Main Content - Properly Centered */}
+        <main className="flex-1 w-full pb-20 lg:pb-0">
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             {children}
           </div>
         </main>

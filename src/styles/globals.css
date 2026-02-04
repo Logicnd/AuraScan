@@ -212,13 +212,13 @@
 
   /* Mobile-first responsive containers */
   .container-mobile {
-    @apply w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto;
+    @apply w-full max-w-7xl mx-auto;
   }
 
   /* Bottom navigation for PWA */
   .nav-bottom {
-    @apply fixed bottom-0 left-0 right-0 bg-background/80 backdrop-blur-lg border-t;
-    @apply flex justify-around items-center h-16 safe-area-inset-bottom;
+    @apply fixed bottom-0 left-0 right-0 h-20;
+    padding-bottom: env(safe-area-inset-bottom);
   }
 
   /* Safe area for PWA */
