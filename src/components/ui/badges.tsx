@@ -142,7 +142,6 @@ export function Badge({
     </div>
   )
 }
-}
 
 interface AchievementProps {
   title: string
