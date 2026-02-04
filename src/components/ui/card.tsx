@@ -47,14 +47,20 @@ export interface CardProps
     VariantProps<typeof cardVariants> {}
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ className, variant, padding, interactive, onClick, ...props }, ref) => {
+  ({ className, variant, padding, interactive, onClick, children, ...props }, ref) => {
     const interactiveProps = interactive && onClick ? {
       role: 'button',
       tabIndex: 0,
       onKeyDown: (e: React.KeyboardEvent<HTMLDivElement>) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          onClick?.(e as any);
+          // Call onClick with a synthetic mouse event
+          const syntheticEvent = {
+            ...e,
+            currentTarget: e.currentTarget,
+            target: e.target,
+          } as React.MouseEvent<HTMLDivElement>;
+          onClick?.(syntheticEvent);
         }
       },
     } : {};
@@ -66,7 +72,9 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
         onClick={onClick}
         {...interactiveProps}
         {...props}
-      />
+      >
+        {children}
+      </div>
     );
   }
 );

@@ -114,8 +114,6 @@ export default function HomePage() {
               interactive 
               className="text-center"
               onClick={() => handleQuickAction('Bias Check')}
-              role="button"
-              tabIndex={0}
               aria-label="Quick bias check scan"
             >
               <CardContent className="flex flex-col items-center gap-2 py-4">
@@ -132,8 +130,6 @@ export default function HomePage() {
               interactive 
               className="text-center"
               onClick={() => handleQuickAction('Privacy Scan')}
-              role="button"
-              tabIndex={0}
               aria-label="Quick privacy scan"
             >
               <CardContent className="flex flex-col items-center gap-2 py-4">
@@ -150,8 +146,6 @@ export default function HomePage() {
               interactive 
               className="text-center"
               onClick={() => handleQuickAction('Deepfake Check')}
-              role="button"
-              tabIndex={0}
               aria-label="Quick deepfake detection"
             >
               <CardContent className="flex flex-col items-center gap-2 py-4">
@@ -168,8 +162,6 @@ export default function HomePage() {
               interactive 
               className="text-center"
               onClick={() => handleQuickAction('Eco Impact')}
-              role="button"
-              tabIndex={0}
               aria-label="Check environmental impact"
             >
               <CardContent className="flex flex-col items-center gap-2 py-4">
