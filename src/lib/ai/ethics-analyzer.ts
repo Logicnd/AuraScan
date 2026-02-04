@@ -52,7 +52,7 @@ import { z } from 'zod';
  * Set spending limits: https://platform.openai.com/account/billing/limits
  */
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY || 'DUMMY_KEY_NOT_SET',
 });
 
 // ═══════════════════════════════════════════════════════════════════════════════
