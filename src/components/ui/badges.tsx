@@ -73,7 +73,6 @@ export function Badge({
 
   return (
     <div className={cn('relative group', className)}>
-      {/* Badge container */}
       <div
         className={cn(
           'relative rounded-xl border-2 flex flex-col items-center justify-center transition-all duration-300',
@@ -84,24 +83,20 @@ export function Badge({
           unlocked && 'hover:scale-105'
         )}
       >
-        {/* Hexagon pattern overlay */}
         <div className="absolute inset-0 opacity-10 pointer-events-none">
-          <div className="w-full h-full bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M15 0l13 7.5v15L15 30 2 22.5v-15z\" fill=\"none\" stroke=\"%23fff\" stroke-opacity=\".3\"/%3E%3C/svg%3E')]" />
+          <div className="w-full h-full bg-[radial-gradient(circle,rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[size:12px_12px]" />
         </div>
 
-        {/* Icon */}
         <span className={cn(sizes.icon, unlocked ? styles.text : 'text-zinc-600')}>
           {icon}
         </span>
 
-        {/* Lock overlay for locked badges */}
         {!unlocked && (
           <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-xl">
             <span className="text-2xl">🔒</span>
           </div>
         )}
 
-        {/* Progress bar for locked badges */}
         {!unlocked && progress !== undefined && (
           <div className="absolute bottom-1 left-1 right-1 h-1 bg-zinc-800 rounded-full overflow-hidden">
             <div
@@ -111,18 +106,13 @@ export function Badge({
           </div>
         )}
 
-        {/* Animated border for legendary */}
         {rarity === 'legendary' && unlocked && (
           <div className="absolute inset-0 rounded-xl overflow-hidden">
-            <div
-              className="absolute inset-0 bg-gradient-to-r from-orange-500 via-yellow-500 to-orange-500 opacity-30"
-              style={{ animation: 'shimmer 2s linear infinite' }}
-            />
+            <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 via-yellow-500/20 to-orange-500/20 animate-pulse" />
           </div>
         )}
       </div>
 
-      {/* Name tooltip */}
       <div className="mt-2 text-center">
         <p className={cn('font-mono font-semibold truncate', sizes.text, styles.text)}>
           {name}
@@ -132,7 +122,6 @@ export function Badge({
         </p>
       </div>
 
-      {/* Hover tooltip */}
       {description && (
         <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-black/90 border border-zinc-800 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 min-w-[150px]">
           <p className="text-xs text-zinc-300 text-center">{description}</p>
@@ -176,16 +165,16 @@ export function Achievement({
         className
       )}
     >
-      {/* Icon */}
-      <div className={cn(
-        'flex-shrink-0 w-14 h-14 rounded-lg border flex items-center justify-center text-2xl',
-        styles.border,
-        unlocked ? styles.text : 'text-zinc-600'
-      )}>
+      <div
+        className={cn(
+          'flex-shrink-0 w-14 h-14 rounded-lg border flex items-center justify-center text-2xl',
+          styles.border,
+          unlocked ? styles.text : 'text-zinc-600'
+        )}
+      >
         {icon}
       </div>
 
-      {/* Content */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
           <h3 className={cn('font-mono font-bold', unlocked ? styles.text : 'text-zinc-500')}>
@@ -201,7 +190,6 @@ export function Achievement({
         )}
       </div>
 
-      {/* XP Reward */}
       <div className="flex-shrink-0 text-right">
         <div className={cn('text-lg font-mono font-bold', unlocked ? 'text-yellow-500' : 'text-zinc-600')}>
           +{xpReward}
@@ -209,7 +197,6 @@ export function Achievement({
         <div className="text-[10px] text-zinc-600 font-mono">XP</div>
       </div>
 
-      {/* Lock icon */}
       {!unlocked && (
         <div className="absolute top-2 right-2 text-zinc-600">🔒</div>
       )}
@@ -233,7 +220,7 @@ export function LevelBadge({ level, title, size = 'md', className }: LevelBadgeP
     { min: 76, max: 100, color: 'from-orange-500 to-red-600', glow: 'shadow-[0_0_30px_rgba(251,146,60,0.6)]' }
   ]
 
-  const tier = tierColors.find(t => level >= t.min && level <= t.max) || tierColors[tierColors.length - 1]
+  const tier = tierColors.find((t) => level >= t.min && level <= t.max) || tierColors[tierColors.length - 1]
 
   const sizes = {
     sm: 'w-10 h-10 text-sm',
@@ -243,12 +230,14 @@ export function LevelBadge({ level, title, size = 'md', className }: LevelBadgeP
 
   return (
     <div className={cn('flex items-center gap-3', className)}>
-      <div className={cn(
-        'rounded-full bg-gradient-to-br flex items-center justify-center font-mono font-bold text-white',
-        tier.color,
-        tier.glow,
-        sizes[size]
-      )}>
+      <div
+        className={cn(
+          'rounded-full bg-gradient-to-br flex items-center justify-center font-mono font-bold text-white',
+          tier.color,
+          tier.glow,
+          sizes[size]
+        )}
+      >
         {level}
       </div>
       <div className="font-mono text-zinc-400 text-sm">{title}</div>
