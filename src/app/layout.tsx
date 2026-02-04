@@ -117,7 +117,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       </head>
-      <body className="font-sans antialiased" style={{ fontFamily: 'Inter, sans-serif' }}>
+      <body className="font-sans antialiased">
         <Providers>
           {children}
         </Providers>
