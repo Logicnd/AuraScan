@@ -2,6 +2,10 @@ import { redirect } from 'next/navigation';
 
 export default function LeaderboardPage() {
   redirect('/');
+}import { redirect } from 'next/navigation';
+
+export default function LeaderboardPage() {
+  redirect('/');
 }
 'use client';
 
