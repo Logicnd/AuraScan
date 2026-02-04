@@ -1,4 +1,8 @@
-'use client';
+import { redirect } from 'next/navigation';
+
+export default function ProfilePage() {
+  redirect('/');
+}'use client';
 
 import React from 'react';
 import { motion } from 'framer-motion';

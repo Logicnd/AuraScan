@@ -25,7 +25,7 @@ interface UseAuthReturn {
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string, displayName: string) => Promise<void>;
   signInWithGoogle: () => Promise<void>;
-  signInWithGitHub: () => Promise<void>;
+  signInWithApple: () => Promise<void>;
   signOut: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
 }
@@ -125,11 +125,11 @@ export function useAuth(): UseAuthReturn {
     }
   };
 
-  const signInWithGitHub = async () => {
+  const signInWithApple = async () => {
     setError(null);
     try {
       const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'github',
+        provider: 'apple',
         options: {
           redirectTo: `${window.location.origin}/api/auth/callback`,
         },
@@ -167,7 +167,7 @@ export function useAuth(): UseAuthReturn {
     signIn,
     signUp,
     signInWithGoogle,
-    signInWithGitHub,
+    signInWithApple,
     signOut,
     resetPassword,
   };

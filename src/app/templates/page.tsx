@@ -1,3 +1,8 @@
+import { redirect } from 'next/navigation';
+
+export default function TemplatesPage() {
+  redirect('/');
+}
 'use client';
 
 import { useState, useMemo } from 'react';

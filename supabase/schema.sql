@@ -27,6 +27,18 @@ CREATE TABLE IF NOT EXISTS profiles (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- Login Events (audit trail for account access)
+CREATE TABLE IF NOT EXISTS login_events (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
+  provider TEXT,
+  ip_address TEXT,
+  user_agent TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_login_events_user_created ON login_events(user_id, created_at DESC);
+
 -- User Stats (gamification)
 CREATE TABLE IF NOT EXISTS user_stats (
   user_id UUID PRIMARY KEY REFERENCES profiles(id) ON DELETE CASCADE,
@@ -57,7 +69,7 @@ CREATE TABLE IF NOT EXISTS scans (
   fairness_score INTEGER CHECK (fairness_score >= 0 AND fairness_score <= 100),
   analysis JSONB NOT NULL,
   carbon_cost DECIMAL(10,6),
-  model_used TEXT DEFAULT 'gpt-4-turbo-preview',
+  model_used TEXT DEFAULT 'gpt-4-turbo',
   tokens_used INTEGER,
   processing_time_ms INTEGER,
   is_public BOOLEAN DEFAULT FALSE,

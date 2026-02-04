@@ -80,6 +80,15 @@ export async function GET(req: NextRequest) {
           unlocked_at: new Date().toISOString(),
         });
       }
+
+      // Record login event for audit trail
+      await serverClient.from('login_events').insert({
+        user_id: data.session.user.id,
+        provider: data.session.user.app_metadata?.provider || 'email',
+        ip_address: req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || null,
+        user_agent: req.headers.get('user-agent') || null,
+        created_at: new Date().toISOString(),
+      });
     }
 
     // Create response with redirect

@@ -9,50 +9,14 @@ import { Button } from '@/components/ui/button';
 import { LevelBadge, StreakBadge } from '@/components/ui/badge';
 import { useGamificationStore, useUserStore, useNotificationStore, useUIStore } from '@/store';
 
-// Navigation items
+// Single-page master dashboard
 const NAV_ITEMS = [
   {
     href: '/',
-    label: 'Scan',
+    label: 'Master Dashboard',
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
-  },
-  {
-    href: '/feed',
-    label: 'Feed',
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-      </svg>
-    ),
-  },
-  {
-    href: '/templates',
-    label: 'Templates',
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
-      </svg>
-    ),
-  },
-  {
-    href: '/learn',
-    label: 'Learn',
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-      </svg>
-    ),
-  },
-  {
-    href: '/profile',
-    label: 'Profile',
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0h4" />
       </svg>
     ),
   },
@@ -79,25 +43,13 @@ export const Header: React.FC = () => {
           <span className="font-bold text-base hidden sm:inline whitespace-nowrap">Home</span>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-1">
-          {NAV_ITEMS.slice(1).map((item) => {
-            const isActive = pathname === item.href;
-            return (
-              <Link key={item.href} href={item.href}>
-                <div className={cn(
-                  'flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors',
-                  isActive
-                    ? 'bg-primary/10 text-primary'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
-                )}>
-                  <span>{item.icon}</span>
-                  <span className="hidden lg:inline">{item.label}</span>
-                </div>
-              </Link>
-            );
-          })}
-        </nav>
+        <div className="hidden md:flex items-center gap-2 text-sm text-muted-foreground">
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary font-medium">
+            {NAV_ITEMS[0].icon}
+            {NAV_ITEMS[0].label}
+          </span>
+          <span className="hidden lg:inline">Real-time ethics threat intelligence</span>
+        </div>
 
         {/* User Stats */}
         <div className="flex items-center gap-2 sm:gap-3">
@@ -326,22 +278,11 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       <Header />
       
       <div className="flex flex-1 w-full">
-        {/* Desktop Sidebar */}
-        <div className="hidden lg:block w-72 border-r bg-card">
-          <Sidebar />
-        </div>
-
-        {/* Main Content - Properly Centered */}
-        <main className="flex-1 w-full pb-20 lg:pb-0">
-          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <main className="flex-1 w-full">
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             {children}
           </div>
         </main>
-      </div>
-
-      {/* Mobile Bottom Nav */}
-      <div className="lg:hidden">
-        <BottomNav />
       </div>
     </div>
   );

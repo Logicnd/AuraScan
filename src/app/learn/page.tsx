@@ -1,85 +1,12 @@
-'use client';
-
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { MainLayout } from '@/components/layout/main-layout';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-
-// Mock course data
-const courses = [
-  {
-    id: '1',
-    title: 'Introduction to AI Ethics',
-    description: 'Learn the fundamentals of ethical AI development and usage',
-    modules: 8,
-    completedModules: 8,
-    duration: '2 hours',
-    xpReward: 500,
-    difficulty: 'Beginner',
-    icon: '📚',
-  },
-  {
-    id: '2',
-    title: 'Bias Detection Masterclass',
-    description: 'Advanced techniques for identifying and mitigating AI bias',
-    modules: 12,
-    completedModules: 7,
-    duration: '4 hours',
-    xpReward: 1000,
-    difficulty: 'Intermediate',
-    icon: '⚖️',
-  },
-  {
-    id: '3',
-    title: 'Privacy & Data Protection',
-    description: 'Understanding GDPR, CCPA, and AI privacy requirements',
-    modules: 10,
-    completedModules: 2,
-    duration: '3 hours',
-    xpReward: 750,
-    difficulty: 'Intermediate',
-    icon: '🔒',
-  },
-  {
-    id: '4',
-    title: 'Deepfake Detection',
-    description: 'Techniques to identify AI-generated content and deepfakes',
-    modules: 6,
-    completedModules: 0,
-    duration: '1.5 hours',
-    xpReward: 600,
-    difficulty: 'Advanced',
-    icon: '👁️',
-  },
-];
+import { redirect } from 'next/navigation';
 
 export default function LearnPage() {
-  const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
+  redirect('/');
+}import { redirect } from 'next/navigation';
 
-  const totalXP = courses.reduce((acc, c) => acc + c.xpReward, 0);
-  const earnedXP = courses.reduce((acc, c) => {
-    const progress = c.completedModules / c.modules;
-    return acc + Math.floor(c.xpReward * progress);
-  }, 0);
-  const completedCourses = courses.filter(c => c.completedModules === c.modules).length;
-
-  return (
-    <MainLayout>
-      <div className="space-y-6">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center space-y-2"
-        >
-          <h1 className="text-3xl font-bold text-gradient">Learning Hub</h1>
-          <p className="text-muted-foreground">
-            Master AI ethics through interactive courses
-          </p>
-        </motion.div>
+export default function LearnPage() {
+  redirect('/');
+}
 
         {/* Progress Overview */}
         <motion.div
