@@ -104,12 +104,12 @@ export function TerminalWindow({
   )
 }
 
-interface CommandLineProps {
+interface AnimatedCommandLineProps {
   commands: { command: string; output?: string; delay?: number }[]
   className?: string
 }
 
-export function CommandLine({ commands, className }: CommandLineProps) {
+export function AnimatedCommandLine({ commands, className }: AnimatedCommandLineProps) {
   const [visibleCommands, setVisibleCommands] = useState<number>(0)
   const [currentText, setCurrentText] = useState('')
   const [showOutput, setShowOutput] = useState(false)
