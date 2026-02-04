@@ -51,9 +51,9 @@ import { z } from 'zod';
  * Check your limits: https://platform.openai.com/account/limits
  * Set spending limits: https://platform.openai.com/account/billing/limits
  */
-const openai = new OpenAI({
+const openai = process.env.OPENAI_API_KEY ? new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
-});
+}) : null;
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // VALIDATION SCHEMAS
@@ -210,7 +210,7 @@ OUTPUT REQUIREMENTS:
  */
 export async function analyzePromptEthics(prompt: string): Promise<EthicsAnalysis> {
   // DEMO MODE: Return mock data if API key not configured
-  if (!process.env.OPENAI_API_KEY) {
+  if (!process.env.OPENAI_API_KEY || !openai) {
     console.log('📊 Demo mode: Returning mock ethics analysis');
     return generateMockAnalysis(prompt);
   }
@@ -320,7 +320,7 @@ export async function quickScan(prompt: string): Promise<{
   riskLevel: string;
   topIssues: string[];
 }> {
-  if (!process.env.OPENAI_API_KEY) {
+  if (!process.env.OPENAI_API_KEY || !openai) {
     return {
       score: Math.floor(Math.random() * 30) + 60,
       riskLevel: 'low',
