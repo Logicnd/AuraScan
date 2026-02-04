@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ParticleField } from "@/components/ui/particle-field";
 import { FloatingOrbs, GlowingOrb } from "@/components/ui/floating-orbs";
-import { HolographicCard, NeonCard } from "@/components/ui/holographic-card";
+import { HolographicCard } from "@/components/ui/holographic-card";
 import { TypingTerminal, TerminalWindow } from "@/components/ui/typing-terminal";
 import { HUDFrame, HUDStat, HUDProgress } from "@/components/ui/hud-elements";
 import { AnimatedProgress, CircularProgress } from "@/components/ui/animated-progress";

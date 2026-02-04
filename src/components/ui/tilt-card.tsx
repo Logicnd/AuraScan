@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, useEffect, ReactNode, MouseEvent as ReactMouseEvent } from 'react'
+import { useRef, useState, ReactNode, MouseEvent as ReactMouseEvent } from 'react'
 import { cn } from '@/lib/utils'
 
 interface TiltCardProps {

@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
 import { Volume2, Bell, Shield, Trash2, LogOut } from 'lucide-react'
 import { GlitchText } from '@/components/ui/glitch-text'
 import { useGamification } from '@/lib/store/gamification'

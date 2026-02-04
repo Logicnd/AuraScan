@@ -3,7 +3,6 @@
 import { useEffect, useState, useRef } from 'react'
 import { useGamification } from '@/lib/store/gamification'
 import { LevelUpModal } from './level-up-modal'
-import { toast } from 'sonner'
 
 export function LevelUpListener() {
   const { level, title } = useGamification()

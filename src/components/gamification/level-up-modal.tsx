@@ -1,9 +1,9 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import { Trophy, X, Shield, ChevronRight } from 'lucide-react'
+import { Trophy, Shield, ChevronRight } from 'lucide-react'
 import { GlitchText } from '@/components/ui/glitch-text'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import confetti from 'canvas-confetti'
 
 interface LevelUpModalProps {
@@ -22,7 +22,7 @@ export function LevelUpModal({ isOpen, onClose, level, title }: LevelUpModalProp
 
       const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min
 
-      const interval: any = setInterval(function() {
+      const interval: ReturnType<typeof setInterval> = setInterval(function() {
         const timeLeft = animationEnd - Date.now()
 
         if (timeLeft <= 0) {

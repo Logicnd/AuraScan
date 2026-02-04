@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 
 interface HackingAnimationProps {
@@ -10,7 +10,6 @@ interface HackingAnimationProps {
 export function HackingAnimation({ onComplete }: HackingAnimationProps) {
   const [progress, setProgress] = useState(0)
   const [logs, setLogs] = useState<string[]>([])
-  const containerRef = useRef<HTMLDivElement>(null)
 
   const hackingLogs = [
     "Establishing handshake...",

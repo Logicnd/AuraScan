@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
 import { Save, User, AtSign } from 'lucide-react'
 import { toast } from 'sonner'
 

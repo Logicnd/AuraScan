@@ -12,9 +12,19 @@ import { GlitchText } from '@/components/ui/glitch-text'
 export default function ScanPage() {
   const { addXp } = useGamification()
   const [status, setStatus] = useState<'idle' | 'scanning' | 'complete'>('idle')
-  const [result, setResult] = useState<any>(null)
+  const [result, setResult] = useState<{
+    score: number
+    timestamp: string
+    issues: Array<{
+      id: string
+      severity: 'high' | 'medium' | 'low'
+      title: string
+      description: string
+      line?: number
+    }>
+  } | null>(null)
 
-  const handleScan = (content: string) => {
+  const handleScan = () => {
     setStatus('scanning')
   }
 

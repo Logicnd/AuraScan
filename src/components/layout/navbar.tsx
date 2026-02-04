@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { motion } from 'framer-motion'
 import { Shield, LayoutDashboard, Scan, Trophy, Settings, User } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { XPBar } from '@/components/ui/xp-bar'

@@ -119,8 +119,6 @@ export function BinaryStream({ text = '01', className, speed = 50 }: BinaryStrea
     if (!container) return
 
     const chars = text.split('')
-    let index = 0
-
     const interval = setInterval(() => {
       const spans = container.querySelectorAll('span')
       spans.forEach((span) => {
@@ -128,7 +126,6 @@ export function BinaryStream({ text = '01', className, speed = 50 }: BinaryStrea
           span.textContent = chars[Math.floor(Math.random() * chars.length)]
         }
       })
-      index++
     }, speed)
 
     return () => clearInterval(interval)

@@ -29,7 +29,9 @@ export function useSound(options: UseSoundOptions = {}) {
 
   const getAudioContext = useCallback(() => {
     if (!audioContextRef.current) {
-      audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)()
+      const AudioContextCtor = window.AudioContext || (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext
+      if (!AudioContextCtor) return null
+      audioContextRef.current = new AudioContextCtor()
     }
     return audioContextRef.current
   }, [])
@@ -44,6 +46,7 @@ export function useSound(options: UseSoundOptions = {}) {
 
     try {
       const ctx = getAudioContext()
+      if (!ctx) return
       const oscillator = ctx.createOscillator()
       const gainNode = ctx.createGain()
 
@@ -59,7 +62,7 @@ export function useSound(options: UseSoundOptions = {}) {
 
       oscillator.start(ctx.currentTime)
       oscillator.stop(ctx.currentTime + duration)
-    } catch (e) {
+    } catch {
       // Audio context not available
     }
   }, [enabled, volume, getAudioContext])
@@ -88,6 +91,7 @@ export function useSound(options: UseSoundOptions = {}) {
 
     try {
       const ctx = getAudioContext()
+      if (!ctx) return
       const oscillator = ctx.createOscillator()
       const gainNode = ctx.createGain()
 
@@ -103,7 +107,7 @@ export function useSound(options: UseSoundOptions = {}) {
 
       oscillator.start(ctx.currentTime)
       oscillator.stop(ctx.currentTime + duration)
-    } catch (e) {
+    } catch {
       // Audio context not available
     }
   }, [enabled, volume, getAudioContext])

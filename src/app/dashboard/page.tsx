@@ -95,7 +95,7 @@ export default function DashboardPage() {
                 Daily Directive
               </h3>
               <p className="text-sm text-zinc-400">
-                "Always sanitize your inputs. The Ghost in the Shell is watching."
+                &quot;Always sanitize your inputs. The Ghost in the Shell is watching.&quot;
               </p>
             </div>
           </div>

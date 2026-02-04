@@ -1,8 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { AlertTriangle, CheckCircle, ShieldAlert, AlertOctagon, Terminal } from 'lucide-react'
-import { GlitchText } from '@/components/ui/glitch-text'
+import { CheckCircle, ShieldAlert, AlertOctagon, Terminal } from 'lucide-react'
 
 interface Issue {
   id: string
@@ -23,12 +22,6 @@ export function AnalysisResult({ score, issues, timestamp }: AnalysisResultProps
     if (score >= 90) return 'text-green-500'
     if (score >= 70) return 'text-yellow-500'
     return 'text-red-500'
-  }
-
-  const getScoreLabel = (score: number) => {
-    if (score >= 90) return 'SECURE'
-    if (score >= 70) return 'WARNING'
-    return 'CRITICAL'
   }
 
   return (

@@ -221,7 +221,7 @@ function CyberNotification({ notification, onClose, index }: CyberNotificationPr
 }
 
 // Quick notification functions
-export function notify(title: string, options?: Partial<Omit<Notification, 'id' | 'title'>>) {
+export function notify(_title: string, _options?: Partial<Omit<Notification, 'id' | 'title'>>) {
   // This would need to be called within a component that has access to the context
   // For a cleaner API, use the hook directly
 }
