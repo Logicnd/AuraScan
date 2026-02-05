@@ -26,10 +26,16 @@ export default function SignupPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, email, password }),
       });
-      const data = await response.json();
-      if (!response.ok) {
+      let data: any = null;
+      try {
+        data = await response.json();
+      } catch {
+        // ignore parse errors; we'll fall back to status text
+      }
+      if (!response.ok || data?.ok === false) {
         setSuggestions(data?.suggestions || []);
-        throw new Error(data.error || "Unable to create profile.");
+        const message = data?.error || response.statusText || "Unable to create profile.";
+        throw new Error(message);
       }
       // Auto sign-in after signup
       await signIn("credentials", {
