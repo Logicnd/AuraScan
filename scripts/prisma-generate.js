@@ -3,14 +3,13 @@ const { spawnSync } = require('child_process');
 const env = { ...process.env };
 if (!env.DATABASE_URL) {
   env.DATABASE_URL = 'file:./dev.db';
-  console.log('[build] DATABASE_URL missing, defaulting to file:./dev.db');
+  console.log('[prisma] DATABASE_URL missing, defaulting to file:./dev.db');
 }
-delete env.__NEXT_PRIVATE_STANDALONE_CONFIG;
 
-const result = spawnSync('next', ['build'], {
+const result = spawnSync('npx', ['prisma', 'generate'], {
   stdio: 'inherit',
   shell: true,
-  env
+  env,
 });
 
 process.exit(result.status ?? 0);
