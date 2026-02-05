@@ -1,21 +1,57 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { useGamification } from '@/lib/store/gamification'
 import { QuestList } from '@/components/dashboard/quest-list'
 import { StatCard } from '@/components/dashboard/stat-card'
 import { RecentActivity } from '@/components/dashboard/recent-activity'
-import { Activity, ShieldAlert, Target, Zap, Trophy } from 'lucide-react'
+import { Activity, ShieldAlert, Target, Zap, Trophy, Loader2 } from 'lucide-react'
 import { GlitchText } from '@/components/ui/glitch-text'
 import Link from 'next/link'
+import { fetchUserStats } from '@/lib/api'
 
 export default function DashboardPage() {
-  const { title, level } = useGamification()
+  const { title: storeTitle, level: storeLevel } = useGamification()
+  const [statsData, setStatsData] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function loadStats() {
+      try {
+        const data = await fetchUserStats()
+        if (data) {
+          setStatsData(data)
+        }
+      } catch (error) {
+        console.error("Failed to load stats", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    loadStats()
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center text-green-500">
+        <Loader2 className="w-8 h-8 animate-spin" />
+        <span className="ml-2 font-mono">INITIALIZING DASHBOARD...</span>
+      </div>
+    )
+  }
+
+  // Use DB data if available, fallback to store/defaults
+  const displayLevel = statsData?.level || storeLevel
+  const displayTitle = statsData?.title || storeTitle
+  const scansCount = statsData?.scans_conducted || 0
+  const threatsCount = statsData?.threats_neutralized || 0
+  const energyOutput = statsData?.energy_output || '1.2 GW'
 
   const stats = [
-    { label: 'Scans Conducted', value: '128', icon: Target, color: 'text-blue-500', border: 'border-blue-500/20', bg: 'bg-blue-500/10' },
-    { label: 'Threats Neutralized', value: '42', icon: ShieldAlert, color: 'text-red-500', border: 'border-red-500/20', bg: 'bg-red-500/10' },
+    { label: 'Scans Conducted', value: scansCount.toString(), icon: Target, color: 'text-blue-500', border: 'border-blue-500/20', bg: 'bg-blue-500/10' },
+    { label: 'Threats Neutralized', value: threatsCount.toString(), icon: ShieldAlert, color: 'text-red-500', border: 'border-red-500/20', bg: 'bg-red-500/10' },
     { label: 'System Uptime', value: '99.9%', icon: Activity, color: 'text-green-500', border: 'border-green-500/20', bg: 'bg-green-500/10' },
-    { label: 'Energy Output', value: '1.2 GW', icon: Zap, color: 'text-yellow-500', border: 'border-yellow-500/20', bg: 'bg-yellow-500/10' },
+    { label: 'Energy Output', value: energyOutput, icon: Zap, color: 'text-yellow-500', border: 'border-yellow-500/20', bg: 'bg-yellow-500/10' },
   ]
 
   return (
@@ -28,13 +64,13 @@ export default function DashboardPage() {
               <GlitchText text="MISSION CONTROL" />
             </h1>
             <p className="text-zinc-400">
-              Welcome back, <span className="text-green-500 font-mono">{title}</span>. Systems nominal.
+              Welcome back, <span className="text-green-500 font-mono">{displayTitle}</span>. Systems nominal.
             </p>
           </div>
           <div className="flex items-center gap-4 bg-zinc-900/50 p-4 rounded-xl border border-zinc-800">
             <div className="text-right">
               <div className="text-xs text-zinc-500 uppercase tracking-wider font-mono">Current Clearance</div>
-              <div className="text-2xl font-bold text-white">LEVEL {level}</div>
+              <div className="text-2xl font-bold text-white">LEVEL {displayLevel}</div>
             </div>
             <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-emerald-700 flex items-center justify-center shadow-lg shadow-green-900/20">
               <ShieldAlert className="w-6 h-6 text-white" />

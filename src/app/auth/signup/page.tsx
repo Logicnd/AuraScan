@@ -12,6 +12,8 @@ import { Loader2, Zap } from 'lucide-react'
 import { MatrixRain } from '@/components/ui/matrix-rain'
 import { GlitchText } from '@/components/ui/glitch-text'
 import { toast } from 'sonner'
+import { signupSchema } from '@/lib/validation'
+import { ZodError } from 'zod'
 
 export default function SignupPage() {
   const [email, setEmail] = useState('')
@@ -25,6 +27,9 @@ export default function SignupPage() {
     setLoading(true)
 
     try {
+      // Validate input
+      signupSchema.parse({ email, password })
+
       const { error } = await supabase.auth.signUp({
         email,
         password,
@@ -41,10 +46,17 @@ export default function SignupPage() {
         })
         router.push('/auth/login')
       }
-    } catch {
-      toast.error('System Failure', {
-        description: 'An unexpected error occurred during initialization.'
-      })
+    } catch (error) {
+      if (error instanceof ZodError) {
+        // Display the first validation error
+        toast.error('Validation Error', {
+          description: error.errors[0].message
+        })
+      } else {
+        toast.error('System Failure', {
+          description: 'An unexpected error occurred during initialization.'
+        })
+      }
     } finally {
       setLoading(false)
     }
