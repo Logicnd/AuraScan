@@ -56,7 +56,7 @@ export default function UpdatePasswordPage() {
     } catch (error) {
       if (error instanceof ZodError) {
         toast.error('Validation Error', {
-          description: error.errors[0].message
+          description: error.issues[0].message
         })
       } else {
         toast.error('System Failure', {

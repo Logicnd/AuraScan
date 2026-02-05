@@ -48,7 +48,7 @@ export default function LoginPage() {
       if (error instanceof ZodError) {
         // Display the first validation error
         toast.error('Validation Error', {
-          description: error.errors[0].message
+          description: error.issues[0].message
         })
       } else {
         toast.error('System Failure', {

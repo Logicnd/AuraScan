@@ -2,12 +2,11 @@
 
 import { cn } from '@/lib/utils'
 
-interface SkeletonProps {
-  className?: string
+interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: 'default' | 'cyber' | 'neon' | 'pulse'
 }
 
-export function Skeleton({ className, variant = 'default' }: SkeletonProps) {
+export function Skeleton({ className, variant = 'default', ...props }: SkeletonProps) {
   const variants = {
     default: 'animate-pulse bg-zinc-800',
     cyber: 'skeleton bg-zinc-900',
@@ -16,7 +15,7 @@ export function Skeleton({ className, variant = 'default' }: SkeletonProps) {
   }
 
   return (
-    <div className={cn('rounded-md', variants[variant], className)} />
+    <div className={cn('rounded-md', variants[variant], className)} {...props} />
   )
 }
 
