@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import GhostTracker from '../components/GhostTracker';
 import { getSessionUser } from '../lib/session';
+import { Toaster } from 'sonner';
 
 const display = DM_Serif_Display({
   subsets: ['latin'],
@@ -62,12 +63,14 @@ export const metadata: Metadata = {
   }
 };
 
-export default function RootLayout({
+export const dynamic = 'force-dynamic';
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const user = getSessionUser();
+  const user = await getSessionUser();
 
   return (
     <html lang="en" className={`${display.variable} ${body.variable}`}>
@@ -78,9 +81,10 @@ export default function RootLayout({
         </div>
         <div className="relative z-10 flex min-h-screen flex-col">
           <GhostTracker />
-          <Navbar name={user.name} />
+          <Navbar name={user.username} bits={user.bits} role={user.role} tag={user.tag} />
           <main className="flex-1">{children}</main>
           <Footer />
+          <Toaster position="top-right" richColors />
         </div>
         <div
           className="hidden"

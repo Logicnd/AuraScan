@@ -1,19 +1,38 @@
-import { cookies } from 'next/headers';
+import type { Session } from 'next-auth';
+import { getAuthSession } from './auth';
+import { ROLE_TAGS } from './constants';
 
 export type SessionUser = {
-  name: string;
+  id: string;
+  username: string;
+  bits: number;
+  role: string;
+  tag: string;
+  userNumber?: number;
 };
 
-const FALLBACK_NAME = 'Operator';
+const FALLBACK_USER: SessionUser = {
+  id: 'anonymous',
+  username: 'Operator',
+  bits: 0,
+  role: 'USER',
+  tag: ROLE_TAGS.USER.label,
+};
 
-export function getSessionUser(): SessionUser {
+export async function getSessionUser(): Promise<SessionUser> {
   try {
-    const raw = cookies().get('aurascan_user')?.value;
-    if (!raw) return { name: FALLBACK_NAME };
-    const parsed = JSON.parse(decodeURIComponent(raw)) as SessionUser;
-    if (!parsed?.name) return { name: FALLBACK_NAME };
-    return { name: parsed.name };
-  } catch {
-    return { name: FALLBACK_NAME };
+    const session = (await getAuthSession()) as Session | null;
+    if (!session?.user) return FALLBACK_USER;
+    return {
+      id: session.user.id,
+      username: session.user.username || session.user.name || FALLBACK_USER.username,
+      bits: session.user.bits ?? FALLBACK_USER.bits,
+      role: session.user.role ?? FALLBACK_USER.role,
+      tag: session.user.tag ?? FALLBACK_USER.tag,
+      userNumber: session.user.userNumber ?? undefined,
+    };
+  } catch (error) {
+    console.error('Failed to read session', error);
+    return FALLBACK_USER;
   }
 }

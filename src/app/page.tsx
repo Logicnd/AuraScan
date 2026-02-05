@@ -1,117 +1,67 @@
 import Link from 'next/link';
-import Card from '../components/Card';
 import Container from '../components/Container';
-import TerminalBlock from '../components/TerminalBlock';
-import ArchiveGrid from '../components/ArchiveGrid';
 import { getSessionUser } from '../lib/session';
 
-const quickLinks = [
-  { href: '/scan', title: 'Start a scan', detail: 'Deterministic output, zero fluff.' },
-  { href: '/archive', title: 'Browse library', detail: 'Saved sessions, fragments, logs.' },
-  { href: '/signal', title: 'Live signals', detail: 'Rolling updates and console feed.' },
-  { href: '/status', title: 'System status', detail: 'Pulse, integrity, sync health.' },
-];
-
-export default function DashboardPage() {
-  const user = getSessionUser();
+export default async function HomePage() {
+  const user = await getSessionUser();
+  const isAuthed = user.id !== 'anonymous';
 
   return (
-    <div className="relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 -z-10 opacity-60">
-        <div className="absolute left-1/2 top-0 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-cyan-500/10 blur-[140px]" />
-        <div className="absolute right-10 top-32 h-[340px] w-[340px] rounded-full bg-emerald-400/10 blur-[120px]" />
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-slate-950 via-slate-950 to-slate-900">
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute left-12 top-16 h-64 w-64 rounded-full bg-cyan-500/15 blur-[120px]" />
+        <div className="absolute right-6 top-40 h-52 w-52 rounded-full bg-emerald-400/10 blur-[100px]" />
       </div>
 
-      <Container className="py-12 md:py-16">
-        <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-          <div className="space-y-6">
-            <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.35em] text-mist">
-              Welcome back
-              <span className="text-signal">{user.name}</span>
-            </div>
-            <div className="space-y-3">
-              <h1 className="text-4xl font-semibold leading-tight text-slate-100 md:text-5xl">
-                Your console is awake.
-              </h1>
-              <p className="max-w-2xl text-lg text-slate-300">
-                Signal intelligence without the drama. Navigate, scan, and stash insights.
-                We keep a few secrets tucked away—find them if you can.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              <Link
-                href="/scan"
-                className="hover-flicker rounded-full bg-signal px-6 py-3 text-sm font-semibold text-slate-950 shadow-glow"
-              >
-                Open Lab
-              </Link>
-              <Link
-                href="/archive"
-                className="hover-flicker rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-slate-100"
-              >
-                Library
-              </Link>
-              <Link
-                href="/signal"
-                className="hover-flicker rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-slate-100"
-              >
-                Signals
-              </Link>
-            </div>
-            <p className="sr-only">base64: L2Rhc2hib2FyZA==</p>
+      <Container className="flex min-h-screen items-center py-16">
+        <div className="space-y-10">
+          <div className="space-y-4">
+            <p className="text-xs uppercase tracking-[0.35em] text-mist">AuraScan</p>
+            <h1 className="text-4xl font-semibold leading-tight text-slate-50 md:text-5xl">
+              Minimal surface. Serious signal.
+            </h1>
+            <p className="max-w-2xl text-base text-slate-300">
+              A clean entry to your scans and sessions. Log in to access the console and archived work.
+            </p>
           </div>
 
-          <TerminalBlock title="Presence">
-            <div className="space-y-3 text-sm text-slate-300">
-              <div className="flex items-center justify-between">
-                <span>Status</span>
-                <span className="text-signal">Online</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span>Identity</span>
-                <span>{user.name}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span>Surface Access</span>
-                <span>Unlocked</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span>Hidden Threads</span>
-                <span className="text-halo">Active</span>
-              </div>
-            </div>
-          </TerminalBlock>
-        </div>
-      </Container>
-
-      <Container className="pb-16">
-        <div className="grid gap-6 lg:grid-cols-4">
-          {quickLinks.map((item) => (
-            <Card key={item.href} title={item.title} className="h-full">
-              <p className="mt-3 text-sm text-slate-400">{item.detail}</p>
+          <div className="flex flex-wrap gap-3">
+            <Link
+              href="/auth/login"
+              className="rounded-full bg-signal px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-slate-950 shadow-glow"
+            >
+              Log in
+            </Link>
+            <Link
+              href="/auth/signup"
+              className="rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-slate-100 hover:bg-white/10"
+            >
+              Create access
+            </Link>
+            {isAuthed ? (
               <Link
-                href={item.href}
-                className="mt-4 inline-flex items-center text-xs uppercase tracking-[0.3em] text-signal hover:text-white"
+                href="/scan"
+                className="rounded-full border border-signal/50 px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-signal hover:bg-signal/10"
               >
-                Enter
+                Open console
               </Link>
-            </Card>
-          ))}
-        </div>
-      </Container>
+            ) : null}
+          </div>
 
-      <Container className="pb-12">
-        <div className="grid gap-8 lg:grid-cols-[1fr_1fr]">
-          <TerminalBlock title="Hints">
-            <p className="text-sm text-slate-300">
-              We pared back the theatrics. Clean controls, deeper depth. A few doors remain hidden:
-              watch the console, the footer dot, and the copy that doesn&rsquo;t blink.
-            </p>
-            <p className="mt-4 text-xs text-slate-500">hex: 2f6e756c6c</p>
-          </TerminalBlock>
-          <Card title="Recent Library" className="p-8">
-            <ArchiveGrid limit={3} />
-          </Card>
+          <div className="grid gap-4 text-sm text-slate-300 md:grid-cols-3">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+              <p className="text-xs uppercase tracking-[0.25em] text-mist">Secure</p>
+              <p className="mt-2 text-slate-100">Private sessions, encrypted at rest.</p>
+            </div>
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+              <p className="text-xs uppercase tracking-[0.25em] text-mist">Fast</p>
+              <p className="mt-2 text-slate-100">Deterministic scans without UI noise.</p>
+            </div>
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+              <p className="text-xs uppercase tracking-[0.25em] text-mist">Ready</p>
+              <p className="mt-2 text-slate-100">Jump into the lab when you sign in.</p>
+            </div>
+          </div>
         </div>
       </Container>
     </div>
