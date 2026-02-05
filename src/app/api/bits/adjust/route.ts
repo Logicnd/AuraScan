@@ -1,29 +1,52 @@
 import { NextResponse } from 'next/server';
-import { adjustBits } from '../../../../lib/bits';
-import { getAuthSession } from '../../../../lib/auth';
+import prisma from '../../../../lib/prisma';
+import { requireAdmin } from '../../../../lib/admin';
 
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: Request) {
-  const session = (await getAuthSession()) as { user?: { id?: string; role?: string } } | null;
-  const role = (session?.user as { role?: string })?.role;
-  if (!role || !['OWNER', 'ADMIN'].includes(role)) {
-    return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-  }
+  const { response } = await requireAdmin();
+  if (response) return response;
 
   const body = await request.json().catch(() => null);
   const userId = typeof body?.userId === 'string' ? body.userId : '';
-  const amount = Number(body?.amount || 0);
-  const reason = typeof body?.reason === 'string' ? body.reason : 'admin_adjust';
-  const actorId = (session?.user as { id?: string })?.id;
+  const amount = Number(body?.amount ?? 0);
+  const reason = typeof body?.reason === 'string' ? body.reason.trim() : 'admin_adjust';
 
-  if (!userId || Number.isNaN(amount) || !amount) {
-    return NextResponse.json({ error: 'Invalid payload' }, { status: 400 });
+  if (!userId) {
+    return NextResponse.json({ error: 'User is required.' }, { status: 400 });
+  }
+  if (!Number.isFinite(amount) || amount === 0) {
+    return NextResponse.json({ error: 'Adjustment amount is required.' }, { status: 400 });
   }
 
   try {
-    const balance = await adjustBits(userId, amount, reason, { actor: actorId });
-    return NextResponse.json({ ok: true, balance });
+    const result = await prisma.$transaction(async (tx) => {
+      const user = await tx.user.findUnique({ where: { id: userId }, select: { bits: true } });
+      if (!user) throw new Error('User not found');
+      const nextBalance = user.bits + amount;
+      if (nextBalance < 0) {
+        throw new Error('Balance cannot go below zero.');
+      }
+
+      await tx.user.update({
+        where: { id: userId },
+        data: { bits: nextBalance },
+      });
+
+      await tx.transaction.create({
+        data: {
+          userId,
+          amount,
+          reason,
+          metadata: JSON.stringify({ source: 'admin_panel' }),
+        },
+      });
+
+      return { balance: nextBalance };
+    });
+
+    return NextResponse.json({ ok: true, ...result });
   } catch (error) {
     return NextResponse.json({ error: (error as Error).message }, { status: 400 });
   }

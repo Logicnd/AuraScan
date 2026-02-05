@@ -4,6 +4,20 @@ export function normalizeUsername(username: string) {
   return username.trim().toLowerCase();
 }
 
+export function validateUsername(username: string): string | null {
+  const normalized = normalizeUsername(username);
+  if (!normalized) {
+    return 'Handle is required.';
+  }
+  if (normalized.length < 3 || normalized.length > 18) {
+    return 'Handle must be 3-18 characters.';
+  }
+  if (!/^[a-z0-9-]+$/.test(normalized)) {
+    return 'Handle can only include letters, numbers, and dashes.';
+  }
+  return null;
+}
+
 export function isReservedUsername(username: string) {
   const normalized = normalizeUsername(username);
   return RESERVED_USERNAMES.some((reserved) => normalized === reserved || normalized.startsWith(`${reserved}-`));
@@ -17,6 +31,14 @@ export function validatePassword(password: string): string | null {
   if (missing.length) {
     return 'Password must include upper, lower, number, and symbol.';
   }
+  return null;
+}
+
+export function validateEmail(email: string | null): string | null {
+  if (!email) return null;
+  const normalized = email.trim().toLowerCase();
+  const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalized);
+  if (!valid) return 'Email format looks invalid.';
   return null;
 }
 

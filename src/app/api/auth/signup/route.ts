@@ -3,7 +3,14 @@ import bcrypt from 'bcryptjs';
 import prisma from '../../../../lib/prisma';
 import { ROLE_TAGS, SIGNUP_BONUS } from '../../../../lib/constants';
 import { getOwnerUsername } from '../../../../lib/ownership';
-import { isReservedUsername, normalizeUsername, suggestUsernames, validatePassword } from '../../../../lib/validators';
+import {
+  isReservedUsername,
+  normalizeUsername,
+  suggestUsernames,
+  validateEmail,
+  validatePassword,
+  validateUsername,
+} from '../../../../lib/validators';
 
 export const dynamic = 'force-dynamic';
 
@@ -18,14 +25,17 @@ export async function POST(request: Request) {
     const email = emailRaw?.trim().toLowerCase() || null;
     const ownerUsername = getOwnerUsername();
 
-    if (!username) {
-      return NextResponse.json({ error: 'Username is required.' }, { status: 400 });
+    const usernameIssue = validateUsername(username);
+    if (usernameIssue) {
+      return NextResponse.json({ error: usernameIssue, code: 'USERNAME_INVALID', field: 'username' }, { status: 400 });
     }
 
     if (isReservedUsername(username) && username !== ownerUsername) {
       return NextResponse.json(
         {
           error: 'That handle is reserved.',
+          code: 'USERNAME_RESERVED',
+          field: 'username',
           suggestions: suggestUsernames(username),
         },
         { status: 409 },
@@ -37,6 +47,8 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           error: 'Username already taken.',
+          code: 'USERNAME_TAKEN',
+          field: 'username',
           suggestions: suggestUsernames(username),
         },
         { status: 409 },
@@ -44,15 +56,28 @@ export async function POST(request: Request) {
     }
 
     if (email) {
+      const emailIssue = validateEmail(email);
+      if (emailIssue) {
+        return NextResponse.json(
+          { error: emailIssue, code: 'EMAIL_INVALID', field: 'email' },
+          { status: 400 },
+        );
+      }
       const emailExists = await prisma.user.findUnique({ where: { email } });
       if (emailExists) {
-        return NextResponse.json({ error: 'Email already registered.' }, { status: 409 });
+        return NextResponse.json(
+          { error: 'Email already registered.', code: 'EMAIL_TAKEN', field: 'email' },
+          { status: 409 },
+        );
       }
     }
 
     const passwordIssue = validatePassword(password);
     if (passwordIssue) {
-      return NextResponse.json({ error: passwordIssue }, { status: 400 });
+      return NextResponse.json(
+        { error: passwordIssue, code: 'PASSWORD_INVALID', field: 'password' },
+        { status: 400 },
+      );
     }
 
     const passwordHash = await bcrypt.hash(password, 12);
@@ -92,7 +117,14 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ ok: true, user });
   } catch (error) {
+    const message = (error as Error).message || 'Signup failed. Please try again.';
+    if ((error as { code?: string }).code === 'P2002') {
+      return NextResponse.json(
+        { error: 'Handle or email already exists.', code: 'UNIQUE_CONSTRAINT' },
+        { status: 409 },
+      );
+    }
     console.error('Signup failed', error);
-    return NextResponse.json({ error: 'Signup failed. Please try again.' }, { status: 500 });
+    return NextResponse.json({ error: message, code: 'SIGNUP_FAILED' }, { status: 500 });
   }
 }
