@@ -1,37 +1,32 @@
-import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
-import "./globals.css";
-import { cn } from "@/lib/utils";
-import { Toaster } from "sonner";
+import type { Metadata } from 'next';
+import { DM_Serif_Display, Space_Grotesk } from 'next/font/google';
+import './globals.css';
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-geist-sans" });
-const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
+const display = DM_Serif_Display({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-display',
+});
+
+const body = Space_Grotesk({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-body',
+});
 
 export const metadata: Metadata = {
-  title: "AuraScan - Your AI's Conscience",
-  description: "Mobile-first PWA that makes ethical AI addictive via gamification",
+  title: 'AuraScan',
+  description: 'Fresh Next.js scaffold for a calm, focused workspace.',
 };
-
-import { Navbar } from "@/components/layout/navbar";
-import { LevelUpListener } from "@/components/gamification/level-up-listener";
-import { Footer } from "@/components/layout/footer";
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en" className="dark">
-      <body className={cn(inter.variable, mono.variable, "min-h-screen bg-black font-sans antialiased selection:bg-green-500/30 flex flex-col")}>
-        <LevelUpListener />
-        <Navbar />
-        <main className="flex-1">
-          {children}
-        </main>
-        <Footer />
-        <Toaster position="top-center" theme="dark" closeButton richColors />
-      </body>
+    <html lang="en" className={`${display.variable} ${body.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }

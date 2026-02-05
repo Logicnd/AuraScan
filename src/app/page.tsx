@@ -1,220 +1,121 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { ParticleField } from "@/components/ui/particle-field";
-import { FloatingOrbs, GlowingOrb } from "@/components/ui/floating-orbs";
-import { HolographicCard } from "@/components/ui/holographic-card";
-import { TypingTerminal, TerminalWindow } from "@/components/ui/typing-terminal";
-import { HUDFrame, HUDStat, HUDProgress } from "@/components/ui/hud-elements";
-import { AnimatedProgress, CircularProgress } from "@/components/ui/animated-progress";
-import { Badge, LevelBadge } from "@/components/ui/badges";
-import { TiltCard, GlowingBorder } from "@/components/ui/tilt-card";
-import { ScanlineOverlay, Vignette, NoiseOverlay } from "@/components/ui/scanline-overlay";
-import { MatrixRain } from "@/components/ui/matrix-rain";
+const highlights = [
+  {
+    title: 'Scan-ready by default',
+    detail: 'A clean scaffold with a focused layout, typography, and spacing.'
+  },
+  {
+    title: 'Calm system, crisp UI',
+    detail: 'Warm neutrals, teal accents, and soft gradients for legibility.'
+  },
+  {
+    title: 'Room to grow',
+    detail: 'Expandable sections for future routes, dashboards, and APIs.'
+  }
+];
+
+const steps = [
+  {
+    label: '1. Define the core workflow',
+    value: 'Map the scan, review, and report loop.'
+  },
+  {
+    label: '2. Add data sources',
+    value: 'Connect your model or pipeline integrations.'
+  },
+  {
+    label: '3. Design the first dashboard',
+    value: 'Prioritize signals, alerts, and user clarity.'
+  }
+];
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen bg-black overflow-hidden">
-      {/* Background effects */}
-      <MatrixRain />
-      <ParticleField particleCount={60} />
-      <FloatingOrbs count={4} />
-      <ScanlineOverlay opacity={0.05} speed="slow" />
-      <Vignette intensity="medium" />
-      <NoiseOverlay opacity={0.02} />
-
-      {/* Cyber grid background */}
-      <div className="fixed inset-0 cyber-grid opacity-30 pointer-events-none" />
-
-      {/* Main content */}
-      <div className="relative z-10 min-h-screen flex flex-col">
-        {/* Hero Section */}
-        <section className="flex-1 flex flex-col items-center justify-center px-4 py-20">
-          {/* Top HUD bar */}
-          <div className="absolute top-0 left-0 right-0 p-4">
-            <div className="max-w-7xl mx-auto flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_rgba(57,255,20,0.8)]" />
-                <span className="font-mono text-xs text-green-400 tracking-widest">SYSTEM ONLINE</span>
+    <main className="min-h-screen px-6 py-16">
+      <section className="mx-auto max-w-6xl">
+        <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+          <div className="space-y-8">
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-teal-700">
+              AuraScan v2
+            </p>
+            <h1 className="text-4xl font-semibold leading-tight text-slate-900 md:text-6xl" style={{ fontFamily: 'var(--font-display)' }}>
+              A fresh start for a calmer, sharper analysis workspace.
+            </h1>
+            <p className="max-w-xl text-lg text-slate-700">
+              This scaffold replaces the previous app with a clean, intentional foundation.
+              Use it to build a new scanning flow, reports dashboard, or decision suite.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <button className="rounded-full bg-teal-700 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-teal-900/20 transition hover:-translate-y-0.5 hover:bg-teal-800">
+                Start building
+              </button>
+              <button className="rounded-full border border-slate-900/15 bg-white/70 px-6 py-3 text-sm font-semibold text-slate-800 backdrop-blur transition hover:-translate-y-0.5 hover:bg-white">
+                View structure
+              </button>
+            </div>
+          </div>
+          <div className="rounded-3xl border border-slate-900/10 bg-white/70 p-8 shadow-[0_30px_80px_rgba(15,23,42,0.12)] backdrop-blur">
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <p className="text-sm font-semibold text-slate-700">Scaffold status</p>
+                <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">
+                  Ready
+                </span>
               </div>
-              <div className="font-mono text-xs text-zinc-600">
-                v2.0.26 // AURASCAN PROTOCOL
+              <div className="space-y-4">
+                <p className="text-3xl font-semibold text-slate-900">3 focus lanes</p>
+                <p className="text-sm text-slate-600">
+                  The layout emphasizes a single flow: vision, build plan, and next actions.
+                </p>
               </div>
-              <Link href="/auth/login">
-                <Button variant="cyber" size="sm" className="font-mono uppercase tracking-wider">
-                  Initialize
-                </Button>
-              </Link>
-            </div>
-          </div>
-
-          {/* Main hero content */}
-          <div className="text-center space-y-8 max-w-4xl mx-auto">
-            {/* Glowing orb accent */}
-            <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 opacity-30">
-              <GlowingOrb size={300} color="#00ffff" />
-            </div>
-
-            {/* Title */}
-            <div className="relative">
-              <h1 className="text-6xl md:text-8xl font-bold tracking-tighter">
-                <span className="text-gradient-animated">AURA</span>
-                <span className="text-white">SCAN</span>
-              </h1>
-              <p className="text-cyan-400/80 font-mono text-sm tracking-[0.3em] mt-2 neon-text">
-                YOUR AI&apos;S CONSCIENCE
-              </p>
-            </div>
-
-            {/* Terminal window */}
-            <div className="max-w-xl mx-auto">
-              <TerminalWindow title="aurascan.protocol">
-                <TypingTerminal
-                  text={[
-                    "Initializing ethical AI scanner...",
-                    "Loading bias detection modules...",
-                    "Privacy protocols engaged...",
-                    "System ready. Welcome, Guardian."
-                  ]}
-                  speed={40}
-                  delay={1500}
-                  loop={true}
-                  className="text-sm"
-                />
-              </TerminalWindow>
-            </div>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-wrap gap-4 justify-center pt-4">
-              <Link href="/auth/signup">
-                <Button variant="holographic" size="xl" className="font-mono uppercase tracking-wider">
-                  Begin Protocol
-                </Button>
-              </Link>
-              <Link href="/auth/login">
-                <Button variant="cyberGreen" size="xl" className="font-mono uppercase tracking-wider">
-                  Access Terminal
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* Stats Section */}
-        <section className="py-16 px-4 border-t border-cyan-500/20">
-          <div className="max-w-6xl mx-auto">
-            <HUDFrame title="GLOBAL STATISTICS" status="online">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 p-4">
-                <HUDStat label="Active Guardians" value="12,847" trend="up" color="cyan" />
-                <HUDStat label="Scans Completed" value="1.2M" trend="up" color="green" />
-                <HUDStat label="Ethics Score" value="94.7" unit="%" trend="stable" color="magenta" />
-                <HUDStat label="Threats Detected" value="847K" trend="down" color="orange" />
+              <div className="grid gap-3">
+                {highlights.map((item) => (
+                  <div key={item.title} className="rounded-2xl border border-slate-900/10 bg-white px-4 py-3">
+                    <p className="text-sm font-semibold text-slate-800">{item.title}</p>
+                    <p className="text-xs text-slate-500">{item.detail}</p>
+                  </div>
+                ))}
               </div>
-            </HUDFrame>
-          </div>
-        </section>
-
-        {/* Features Grid */}
-        <section className="py-16 px-4">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-12 font-mono">
-              <span className="text-cyan-400">&lt;</span>
-              CORE MODULES
-              <span className="text-cyan-400">/&gt;</span>
-            </h2>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <TiltCard>
-                <HolographicCard glowColor="cyan" className="h-full">
-                  <div className="p-6 space-y-4">
-                    <div className="text-4xl">🔍</div>
-                    <h3 className="text-xl font-bold text-cyan-400 font-mono">Ethics Scanner</h3>
-                    <p className="text-sm text-zinc-400">
-                      Real-time analysis for Bias, Privacy, and Safety violations.
-                    </p>
-                    <HUDProgress value={92} label="Accuracy" color="cyan" />
-                  </div>
-                </HolographicCard>
-              </TiltCard>
-
-              <TiltCard>
-                <HolographicCard glowColor="green" className="h-full">
-                  <div className="p-6 space-y-4">
-                    <div className="text-4xl">🎮</div>
-                    <h3 className="text-xl font-bold text-green-400 font-mono">Gamification</h3>
-                    <p className="text-sm text-zinc-400">
-                      Earn XP, unlock badges, and compete on global leaderboards.
-                    </p>
-                    <HUDProgress value={78} label="Engagement" color="green" />
-                  </div>
-                </HolographicCard>
-              </TiltCard>
-
-              <TiltCard>
-                <HolographicCard glowColor="magenta" className="h-full">
-                  <div className="p-6 space-y-4">
-                    <div className="text-4xl">👥</div>
-                    <h3 className="text-xl font-bold text-pink-400 font-mono">Community</h3>
-                    <p className="text-sm text-zinc-400">
-                      Join guilds, share templates, and collaborate with guardians.
-                    </p>
-                    <HUDProgress value={85} label="Activity" color="magenta" />
-                  </div>
-                </HolographicCard>
-              </TiltCard>
-
-              <TiltCard>
-                <HolographicCard glowColor="purple" className="h-full">
-                  <div className="p-6 space-y-4">
-                    <div className="text-4xl">📱</div>
-                    <h3 className="text-xl font-bold text-purple-400 font-mono">AR Lens</h3>
-                    <p className="text-sm text-zinc-400">
-                      Analyze UI ethics through your camera in real-time AR.
-                    </p>
-                    <HUDProgress value={67} label="Beta" color="cyan" />
-                  </div>
-                </HolographicCard>
-              </TiltCard>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Level Progress Section */}
-        <section className="py-16 px-4 border-t border-cyan-500/20">
-          <div className="max-w-4xl mx-auto">
-            <GlowingBorder colors={['#00ffff', '#39ff14', '#ff00ff']}>
-              <div className="p-8 space-y-6">
-                <div className="flex items-center justify-between">
-                  <LevelBadge level={42} title="Ethics Guardian" size="lg" />
-                  <CircularProgress value={67} size={80} color="cyan" />
-                </div>
-                
-                <div className="space-y-4">
-                  <AnimatedProgress value={67} variant="cyber" color="cyan" showValue />
-                  <div className="grid grid-cols-3 gap-4">
-                    <Badge name="First Scan" icon="🔍" rarity="common" unlocked />
-                    <Badge name="Bug Hunter" icon="🐛" rarity="rare" unlocked />
-                    <Badge name="Guardian Elite" icon="⚔️" rarity="legendary" unlocked />
-                  </div>
-                </div>
+      <section className="mx-auto mt-20 grid max-w-6xl gap-10 md:grid-cols-[1.1fr_0.9fr]">
+        <div className="space-y-6 rounded-3xl border border-slate-900/10 bg-white/60 p-8 backdrop-blur">
+          <h2 className="text-3xl font-semibold text-slate-900" style={{ fontFamily: 'var(--font-display)' }}>
+            Next steps that keep momentum
+          </h2>
+          <p className="text-base text-slate-700">
+            Keep the build simple. Commit the first flow, then layer in data, alerts, and
+            the interactive pieces that matter most.
+          </p>
+          <div className="grid gap-4">
+            {steps.map((step) => (
+              <div key={step.label} className="rounded-2xl border border-slate-900/10 bg-white px-5 py-4">
+                <p className="text-sm font-semibold text-slate-800">{step.label}</p>
+                <p className="text-sm text-slate-600">{step.value}</p>
               </div>
-            </GlowingBorder>
+            ))}
           </div>
-        </section>
-
-        {/* Footer */}
-        <footer className="py-8 px-4 border-t border-cyan-500/20">
-          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="font-mono text-xs text-zinc-600">
-              © 2026 AURASCAN PROTOCOL // ALL SYSTEMS NOMINAL
-            </div>
-            <div className="flex items-center gap-6">
-              <span className="font-mono text-xs text-cyan-500/50 tracking-wider">
-                ETHICS • TRANSPARENCY • ACCOUNTABILITY
-              </span>
-            </div>
+        </div>
+        <div className="space-y-6">
+          <div className="rounded-3xl border border-slate-900/10 bg-teal-700 p-8 text-white shadow-[0_25px_60px_rgba(15,118,110,0.35)]">
+            <p className="text-xs uppercase tracking-[0.35em] text-teal-100">Focus</p>
+            <p className="mt-4 text-3xl font-semibold" style={{ fontFamily: 'var(--font-display)' }}>
+              Build around the signals that are hardest to ignore.
+            </p>
+            <p className="mt-4 text-sm text-teal-100">
+              Start with the most important alerts. Everything else can be layered later.
+            </p>
           </div>
-        </footer>
-      </div>
+          <div className="rounded-3xl border border-slate-900/10 bg-white/70 p-6 backdrop-blur">
+            <p className="text-sm font-semibold text-slate-800">Need a custom direction?</p>
+            <p className="text-sm text-slate-600">
+              Tell me the theme you want and I can tailor this scaffold to match it.
+            </p>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
