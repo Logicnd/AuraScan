@@ -28,6 +28,16 @@ export default function SignupPage() {
     return null;
   }, [username]);
 
+  const usernameWarning = useMemo(() => {
+    const trimmed = username.trim().toLowerCase();
+    if (!trimmed) return null;
+    const reserved = RESERVED_USERNAMES.some(
+      (reservedName) => trimmed === reservedName || trimmed.startsWith(`${reservedName}-`),
+    );
+    if (!reserved) return null;
+    return "That handle is reserved unless you own the instance.";
+  }, [username]);
+
   const passwordIssue = useMemo(() => {
     if (!password.trim()) return "Password is required.";
     if (password.length < MIN_PASSWORD_LENGTH) return `At least ${MIN_PASSWORD_LENGTH} characters.`;
@@ -119,14 +129,19 @@ export default function SignupPage() {
             <UserPlusIcon size={16} className="text-slate-500" />
             <input
               value={username}
-              onChange={(event) => setUsername(event.target.value)}
+              onChange={(event) => setUsername(event.target.value.toLowerCase())}
               onBlur={() => setTouched((prev) => ({ ...prev, username: true }))}
               placeholder="eg. neon-player"
+              autoCapitalize="none"
+              autoCorrect="off"
               className="w-full bg-transparent text-sm text-slate-100 outline-none"
             />
           </div>
           {touched.username && usernameIssue ? (
             <p className="mt-2 text-xs text-ember">{usernameIssue}</p>
+          ) : null}
+          {!usernameIssue && usernameWarning ? (
+            <p className="mt-2 text-xs text-amber-200">{usernameWarning}</p>
           ) : null}
           {error?.field === "username" ? <p className="mt-2 text-xs text-ember">{error.message}</p> : null}
         </label>
@@ -136,10 +151,13 @@ export default function SignupPage() {
           <div className="mt-3 flex items-center gap-3 rounded-2xl border border-white/10 bg-black/50 px-4 py-3">
             <MailIcon size={16} className="text-slate-500" />
             <input
+              type="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               onBlur={() => setTouched((prev) => ({ ...prev, email: true }))}
               placeholder="you@example.com"
+              autoCapitalize="none"
+              autoCorrect="off"
               className="w-full bg-transparent text-sm text-slate-100 outline-none"
             />
           </div>
@@ -157,6 +175,8 @@ export default function SignupPage() {
               onChange={(event) => setPassword(event.target.value)}
               onBlur={() => setTouched((prev) => ({ ...prev, password: true }))}
               placeholder={`At least ${MIN_PASSWORD_LENGTH} chars with A/a/0/!`}
+              autoCapitalize="none"
+              autoCorrect="off"
               className="w-full bg-transparent text-sm text-slate-100 outline-none"
             />
           </div>
