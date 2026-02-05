@@ -3,14 +3,14 @@
 import { useEffect, useState } from 'react';
 
 const lines = [
-  'RX: signal coherence stabilized at 83%',
-  'RX: echo fragments repeating every 14.2s',
-  'TX: do not trust the output',
-  'RX: anomaly cluster detected in archive sector 9',
-  'TX: aurascan node shifted to silent mode',
-  'RX: trace vector recorded -- continue',
-  'TX: checksum mismatch -- re-route',
-  'RX: signal drifting north of baseline'
+  'Console: welcome back, watcher.',
+  'Note: handle stored locally; no cloud calls.',
+  'Hint: footer dot hides a route.',
+  'Lab: deterministic scans cached for speed.',
+  'Library: search is manual for now.',
+  'Signal: repeat lines unlock /null faster.',
+  'Badge: logo taps still count — quietly.',
+  'Status: numbers are simulated, mood is real.'
 ];
 
 export default function SignalStream() {

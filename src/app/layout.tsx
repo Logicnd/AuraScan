@@ -4,6 +4,7 @@ import './globals.css';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import GhostTracker from '../components/GhostTracker';
+import { getSessionUser } from '../lib/session';
 
 const display = DM_Serif_Display({
   subsets: ['latin'],
@@ -23,18 +24,18 @@ export const metadata: Metadata = {
     default: 'AuraScan',
     template: '%s | AuraScan'
   },
-  description: 'An ominous signal interface for scanning anomalies and tracing aura residue.',
+  description: 'A personal console for quick scans, notes, and playful secrets.',
   keywords: [
     'AuraScan',
-    'signal analysis',
-    'anomaly scanning',
-    'ARG',
-    'mysterious archive',
-    'dark interface'
+    'dashboard',
+    'scanner',
+    'notes',
+    'signals',
+    'easter eggs'
   ],
   openGraph: {
     title: 'AuraScan',
-    description: 'Scan for anomalies. Decode the quiet signals.',
+    description: 'A personal console for quick scans, notes, and playful secrets.',
     url: 'https://aurascan.lol',
     siteName: 'AuraScan',
     images: [{ url: '/opengraph-image' }],
@@ -66,6 +67,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const user = getSessionUser();
+
   return (
     <html lang="en" className={`${display.variable} ${body.variable}`}>
       <body className="bg-aurascan text-slate-100 antialiased">
@@ -75,7 +78,7 @@ export default function RootLayout({
         </div>
         <div className="relative z-10 flex min-h-screen flex-col">
           <GhostTracker />
-          <Navbar />
+          <Navbar name={user.name} />
           <main className="flex-1">{children}</main>
           <Footer />
         </div>

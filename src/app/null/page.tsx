@@ -11,7 +11,7 @@ export default function NullPage() {
     <Layout>
       <TerminalBlock title="Null Channel">
         <p className="text-sm text-slate-300">
-          This channel is unlisted. If you found it, keep the trace quiet.
+          This channel is unlisted. Quietly rejoice—you were looking.
         </p>
         <p className="mt-4 text-xs text-slate-500">base64: L2VjaG8=</p>
       </TerminalBlock>

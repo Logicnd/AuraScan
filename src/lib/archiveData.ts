@@ -13,108 +13,108 @@ export type ArchiveEntry = {
 
 export const archiveEntries: ArchiveEntry[] = [
   {
-    id: 'ghost-01',
-    title: 'Ghost-01 / Persistent Signature',
-    summary: 'A silent entry surfaced only after repeated scans.',
+    id: 'profile-01',
+    title: 'Profile-01 / First login',
+    summary: 'Welcome ping captured at initial entry.',
     date: '2026-02-05',
     clearance: 'A-0',
-    tags: ['ghost', 'persistent', 'signature'],
-    fragment: 'hex: 2f6563686f',
+    tags: ['onboarding', 'presence'],
+    fragment: 'hex: 2f64617368626f617264',
     details: [
-      'Subject emits a stable imprint across cycles.',
-      'Trace suggests recursive observation.',
-      'Archive indicates memory retention beyond baseline.'
+      'Session cookie established.',
+      'Greeting rendered with stored handle.',
+      'No remote calls triggered.'
     ],
-    hidden: ['base64: Z2hvc3Q6L2VjaG8='],
+    hidden: ['base64: L3N0YXR1cw=='],
     requiresFlag: 'archive-ghost'
   },
   {
     id: 'delta-07',
-    title: 'Delta-07 / Residual Glow',
-    summary: 'Low-light resonance echoes found in coastal relay nodes.',
+    title: 'Delta-07 / UI polish',
+    summary: 'Rounded icon, softer gradients, sharper copy.',
     date: '2026-02-02',
     clearance: 'C-2',
-    tags: ['coast', 'low-light', 'echo'],
+    tags: ['design', 'visual', 'icon'],
     fragment: 'base64: ZGVsdGE6L251bGw=',
     details: [
-      'Spectral trace sustained for 42 seconds before decay.',
-      'Ambient aura response registered above baseline.',
-      'No correlated emissions from adjacent nodes.'
+      'Navigation streamlined to core destinations.',
+      'ARG tone reduced; easter eggs retained.',
+      'Icon now circular to match the new chrome.'
     ],
     hidden: ['rot13: qrgyn: rpub']
   },
   {
     id: 'hollow-19',
-    title: 'Hollow-19 / Memory Bleed',
-    summary: 'Repeating loops detected in inert archive segments.',
+    title: 'Hollow-19 / Session echo',
+    summary: 'Handle remembered between visits.',
     date: '2026-01-28',
     clearance: 'B-4',
-    tags: ['loop', 'residual', 'memory'],
+    tags: ['memory', 'session'],
     fragment: 'hex: 2f6e756c6c',
     details: [
-      'Multiple observations indicate slow phase drift.',
-      'Cross-check suggests no mechanical failure.',
-      'Possible human imprint overlay.'
+      'Local storage mirrors cookie for quick greets.',
+      'No personal data leaves the browser.',
+      'Sign-out clears both layers.'
     ],
     hidden: ['binary: 01101110 01110101 01101100 01101100']
   },
   {
     id: 'iris-55',
-    title: 'Iris-55 / Phantom Aperture',
-    summary: 'High-frequency aperture event with no visual anchor.',
+    title: 'Iris-55 / Friendly greet',
+    summary: 'Dashboard tone calibrated for everyday use.',
     date: '2026-01-21',
     clearance: 'A-1',
-    tags: ['aperture', 'high-frequency', 'phantom'],
+    tags: ['tone', 'ux'],
     fragment: 'rot13: vef: vsf',
     details: [
-      'Brief flare preceded by harmonic drop.',
-      'Archive node auto-flagged for silent review.',
-      'No outbound signal present.'
+      'Removed heavy jargon while keeping depth.',
+      'Hints remain for curious eyes.',
+      'Greeting adapts to stored handle.'
     ],
     hidden: ['base64: L2VjaG8=']
   },
   {
     id: 'rift-32',
-    title: 'Rift-32 / Static Bloom',
-    summary: 'A static bloom pattern recurs every 2.1 hours.',
+    title: 'Rift-32 / Hidden switch',
+    summary: 'A subtle toggle unlocks an extra route.',
     date: '2026-01-12',
     clearance: 'B-3',
-    tags: ['static', 'bloom', 'periodic'],
+    tags: ['easter-egg', 'hidden'],
     fragment: 'binary: 01110010 01101001 01100110 01110100',
     details: [
-      'Pulse aligns with dormant system cycles.',
-      'No user activity detected at time of event.',
-      'Archive layer shows faint glyph trace.'
+      'Logo interactions still count, but with restraint.',
+      'Null channel remains—quietly.',
+      'Signal log hints at where to look.'
     ],
     hidden: ['hex: 2f7369676e616c']
   },
   {
     id: 'sable-11',
-    title: 'Sable-11 / Quiet Drift',
-    summary: 'Extended drift pattern logged in southern relay.',
+    title: 'Sable-11 / Quiet mode',
+    summary: 'ARG elements dialed down to 10%.',
     date: '2025-12-31',
     clearance: 'C-1',
-    tags: ['drift', 'quiet', 'southern'],
+    tags: ['calm', 'minimal'],
     fragment: 'base64: c2FibGU6L3NpZ25hbA==',
     details: [
-      'Drift exceeded tolerance yet remained coherent.',
-      'Sensor bloom indicates secondary influence.',
-      'Log shows repeated trace key: "echo".'
+      'Copy trimmed for clarity.',
+      'Visual noise reduced; intentional glow kept.',
+      'Secrets left intact for the patient.'
     ],
     hidden: ['rot13: fnovyr-11']
   },
   {
     id: 'veil-04',
-    title: 'Veil-04 / Residual Mirror',
-    summary: 'Mirror response observed between two unrelated prompts.',
+    title: 'Veil-04 / Mirror check',
+    summary: 'Content mirrored between dashboard and library.',
     date: '2025-12-18',
     clearance: 'B-1',
-    tags: ['mirror', 'residual', 'sync'],
+    tags: ['consistency', 'ui'],
     fragment: 'hex: 2f61726368697665',
     details: [
-      'Mirror response persists across test cycles.',
-      'No direct link between sources.',
-      'System flagged anomaly as "traceable".'
+      'Cards now reusable across sections.',
+      'Typography aligned for dashboards.',
+      'Easter egg copy remains in footnotes.'
     ],
     hidden: ['base64: L3N0YXR1cw==']
   }

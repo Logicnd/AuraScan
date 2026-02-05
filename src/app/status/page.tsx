@@ -20,10 +20,11 @@ export default function StatusPage() {
       <div className="space-y-4">
         <p className="text-xs uppercase tracking-[0.35em] text-mist">Status</p>
         <h1 className="text-3xl font-semibold text-slate-100 md:text-4xl">
-          System integrity overview.
+          System overview
         </h1>
         <p className="text-sm text-slate-400">
-          Live values are simulated. Drift remains within acceptable tolerances.
+          Live-ish values to keep you oriented. We still simulate the numbers, but the health bar
+          tells the story.
         </p>
       </div>
       <div className="mt-10 grid gap-6 lg:grid-cols-2">

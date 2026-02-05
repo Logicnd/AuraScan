@@ -97,7 +97,7 @@ export default function ScanUI() {
         <div className="rounded-3xl border border-white/10 bg-white/5 p-6 text-sm text-slate-300">
           <p className="text-slate-500">System note</p>
           <p className="mt-3">
-            The scanner does not confirm authenticity. It mirrors residual impressions.
+            Deterministic sandbox: same input, same output. Perfect for repeatability.
           </p>
           <p className="mt-4 text-xs text-slate-600">hex: 2f6563686f</p>
         </div>

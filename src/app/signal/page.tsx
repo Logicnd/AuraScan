@@ -16,15 +16,15 @@ export default function SignalPage() {
         <div className="space-y-4">
           <p className="text-xs uppercase tracking-[0.35em] text-mist">Signal Log</p>
           <h1 className="text-3xl font-semibold text-slate-100 md:text-4xl">
-            Intercepted transmissions from the noise floor.
+            Live stream of console notes.
           </h1>
           <p className="text-sm text-slate-400">
-            Streams are unstable. Copy fragments only when repetition confirms intent.
+            Lightweight feed for hints, updates, and a couple of planted easter eggs.
           </p>
         </div>
         <TerminalBlock title="Console">
           <p className="text-sm text-slate-300">
-            Monitor live output for drift, then re-check archive sequences for overlap.
+            Keep an eye on repeating lines—some unlock the null route faster.
           </p>
           <p className="mt-4 text-xs text-slate-500">base64: L3N0YXR1cw==</p>
         </TerminalBlock>
