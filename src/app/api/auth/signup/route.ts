@@ -5,6 +5,8 @@ import { ROLE_TAGS, SIGNUP_BONUS } from '../../../../lib/constants';
 import { getOwnerUsername } from '../../../../lib/ownership';
 import { isReservedUsername, normalizeUsername, suggestUsernames, validatePassword } from '../../../../lib/validators';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: Request) {
   try {
     const body = await request.json().catch(() => null);

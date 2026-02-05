@@ -5,6 +5,8 @@ import { getAuthSession } from '../../../lib/auth';
 import { getOwnerUsername } from '../../../lib/ownership';
 import { isReservedUsername, normalizeUsername, validatePassword } from '../../../lib/validators';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   const session = (await getAuthSession()) as { user?: { id?: string } } | null;
   const userId = (session?.user as { id?: string })?.id;

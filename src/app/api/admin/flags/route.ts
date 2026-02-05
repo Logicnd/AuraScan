@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import prisma from '../../../../lib/prisma';
 import { getAuthSession } from '../../../../lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   const session = (await getAuthSession()) as { user?: { id?: string; role?: string } } | null;
   const role = (session?.user as { role?: string })?.role;

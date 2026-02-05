@@ -13,6 +13,7 @@ const ownerUsername = getOwnerUsername();
 
 type AuthConfig = {
   adapter: ReturnType<typeof PrismaAdapter>;
+  secret?: string;
   session: { strategy: 'jwt' };
   pages: { signIn: string };
   providers: unknown[];
@@ -85,6 +86,7 @@ async function awardLoginReward(userId: string) {
 
 export const authOptions: AuthConfig = {
   adapter: PrismaAdapter(prisma),
+  secret: process.env.NEXTAUTH_SECRET || 'dev-secret',
   session: { strategy: 'jwt' },
   pages: {
     signIn: '/auth/login',

@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { adjustBits } from '../../../../lib/bits';
 import { getAuthSession } from '../../../../lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: Request) {
   const session = (await getAuthSession()) as { user?: { id?: string; role?: string } } | null;
   const role = (session?.user as { role?: string })?.role;

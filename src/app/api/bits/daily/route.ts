@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { getAuthSession } from '../../../../lib/auth';
 import { claimDailyReward } from '../../../../lib/bits';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST() {
   const session = (await getAuthSession()) as { user?: { id?: string } } | null;
   const userId = (session?.user as { id?: string })?.id;
